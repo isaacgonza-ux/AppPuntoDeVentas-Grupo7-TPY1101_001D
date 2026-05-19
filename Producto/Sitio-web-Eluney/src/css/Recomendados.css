@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+:root {
+  --bg-color: #faf7f2;
+  --card-bg: #f5f1e8;
+  --text-dark: #1f1410;
+  --text-muted: #6b5344;
+  --accent-color: #8b6f47;
+  --accent-hover: #3d2416;
+  --price-color: #8b6f47;
+}
+
+.recomendados-section {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  padding: 80px 0;
+  width: 100%;
+  max-width: 100vw;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* --- Encabezado Centrado y Potente --- */
+.header-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 50px;
+  padding: 0 5%;
+}
+
+.header-text h2 {
+  font-size: 52px;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin: 0 0 5px 0;
+  letter-spacing: -2px;
+}
+
+.header-text p {
+  color: #8b6f47;
+  font-weight: 700;
+  font-size: 22px;
+  margin: 0;
+  font-style: normal;
+}
+
+/* --- Configuración de 1 FILA (4 Productos) --- */
+.cards-grid {
+  display: grid;
+  /* Creamos exactamente 4 columnas de igual tamaño */
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 25px;
+  padding: 20px 5% 60px 5%;
+  /* Centramos el grid en la pantalla */
+  justify-content: center;
+  /* Ya no necesitamos scroll si solo son 4 */
+  overflow-x: hidden; 
+}
+
+/* --- Estilo de Tarjetas --- */
+.card {
+  /* Quitamos el width fijo de 260px para que el grid maneje el tamaño */
+  width: 100%; 
+  max-width: 280px; 
+  background-color: var(--card-bg);
+  border-radius: 24px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 10px 20px rgba(62, 39, 35, 0.05);
+  margin: 0 auto; /* Asegura que la card esté centrada en su columna */
+}
+
+.card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(62, 39, 35, 0.15);
+  background-color: #fff;
+}
+
+.card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 20px;
+  margin-bottom: 15px;
+}
+
+.tag {
+  align-self: flex-start;
+  background-color: var(--accent-color);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.card-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--price-color);
+}
+
+.add-btn { display: none; }
+
+/* --- Adaptación para Móviles (Muy importante) --- */
+@media (max-width: 1024px) {
+  .cards-grid {
+    /* En tablets mostramos 2 por fila */
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .header-text h2 {
+    font-size: 38px;
+  }
+  
+  .header-text p {
+    font-size: 18px;
+  }
+
+  .cards-grid {
+    /* En celulares 1 sola fila de arriba a abajo */
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}

@@ -1,0 +1,261 @@
+.pasteleria {
+  --pasteleria-panel: #3d2416;
+  --pasteleria-panel-strong: #1f1410;
+  --pasteleria-accent: #d4a574;
+  --pasteleria-accent-soft: #e8d9c8;
+  --pasteleria-text-dark: #1f1410;
+  --pasteleria-text-light: #f5f1e8;
+  background: #fae9dd;
+  padding-top: 8rem;
+  padding-bottom: 6rem;
+}
+
+.pasteleria__intro {
+  display: grid;
+  grid-template-columns: minmax(280px, 430px) 1fr;
+  align-items: center;
+  gap: 2.5rem;
+  margin-bottom: 3.4rem;
+  height: 200px;
+  margin: 0 auto 3.4rem auto; /* PARA CENTRAR */
+  max-width: 1000px; /**/
+}
+
+/* ── ENCABEZADO ── */
+.pasteleria__header {
+  text-align: center;
+  max-width: 430px;
+  margin: 0;
+  padding-top: 0;
+}
+
+.pasteleria__etiqueta {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--pasteleria-accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.pasteleria__titulo {
+  text-align: center;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--pasteleria-text-dark);
+  margin: 0.5rem 0 1rem 0;
+  
+  font-family: 'Inter', sans-serif;
+ 
+}
+
+.pasteleria__subtitulo {
+  text-align: center;
+  font-size: 1rem;
+  color: #5b3d2e;
+  line-height: 1.5;
+  
+}
+
+/* ── PASOS ── */
+.pasteleria__pasos {
+  display: flex;
+  justify-content: flex-end;
+  gap: 2rem;
+  margin-bottom: 0;
+  flex-wrap: wrap;
+  
+}
+
+.pasteleria__paso {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  text-align: center;
+  flex: 0 1 150px;
+  max-width: 170px;
+  box-shadow: none;
+}
+
+.pasteleria__paso-icono {
+  width: 92px;
+  height: 92px;
+  margin: 0 auto 0.9rem auto;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff4ea;
+  background: radial-gradient(circle at 30% 30%, #f29d78 0%, #e36d58 52%, #cb5548 100%);
+  box-shadow: 0 8px 16px rgba(201, 85, 72, 0.28);
+}
+
+.pasteleria__paso-numero {
+  display: none;
+}
+
+.pasteleria__paso-titulo {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2f3f45;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  
+}
+
+
+/* ── BANNER ── */
+.pasteleria__banner {
+  position: relative;
+  width: 100%;
+  margin-left: 0;
+  height: 471px;
+  overflow: hidden;
+}
+
+.pasteleria__banner-imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.pasteleria__banner-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pasteleria__banner-texto {
+  color: #ffffff;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Responsive banner */
+@media (max-width: 768px) {
+  .pasteleria__banner {
+    width: 100%;
+    margin-left: 0;
+    height: 200px;
+  }
+
+  .pasteleria__banner-texto {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pasteleria__banner {
+    width: 100%;
+    margin-left: 0;
+    height: 160px;
+  }
+
+  .pasteleria__banner-texto {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}
+
+
+
+
+
+
+
+
+
+/*responsive*/
+
+/* Tablet */
+@media (max-width: 768px) {
+  .pasteleria {
+    padding: 3rem 2rem;
+  }
+
+  .pasteleria__intro {
+    grid-template-columns: 1fr;
+    gap: 1.7rem;
+  }
+
+  .pasteleria__header {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  /* Pasos en columna */
+  .pasteleria__pasos {
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.3rem;
+  }
+
+  .pasteleria__paso {
+    max-width: 160px;
+    width: auto;
+  }
+
+  
+
+  .pasteleria__titulo {
+    font-size: 1.8rem;
+    
+  }
+
+
+}
+
+/* Móvil */
+@media (max-width: 480px) {
+  .pasteleria {
+    padding: 2rem 1rem;
+  }
+
+  .pasteleria__intro {
+    margin-bottom: 2.4rem;
+  }
+
+  .pasteleria__titulo {
+    font-size: 1.5rem;
+  }
+
+  .pasteleria__subtitulo {
+    font-size: 0.9rem;
+  }
+
+  .pasteleria__pasos {
+    gap: 1rem;
+  }
+
+  .pasteleria__paso {
+    flex-basis: 130px;
+  }
+
+  .pasteleria__paso-icono {
+    width: 78px;
+    height: 78px;
+  }
+
+  .pasteleria__paso-titulo {
+    font-size: 0.92rem;
+  }
+
+  .pasteleria__card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .pasteleria__card-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
