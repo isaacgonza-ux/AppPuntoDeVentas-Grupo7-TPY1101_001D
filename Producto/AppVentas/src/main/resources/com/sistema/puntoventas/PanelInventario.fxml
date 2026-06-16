@@ -20,7 +20,7 @@
                <children>
                   <Label fx:id="lblTotalProductos" layoutX="21.0" layoutY="14.0" text="TOTAL PRODUCTOS" textFill="WHITE">
                      <font>
-                        <Font name="Arial Black" size="12.0" />
+                        <Font name="Arial" size="12.0" />
                      </font>
                   </Label>
                </children>
@@ -29,7 +29,7 @@
                <children>
                   <Label fx:id="lblMovimientoHoy" layoutX="14.0" layoutY="14.0" text="MOVIMIENTO HOY " textFill="WHITE">
                      <font>
-                        <Font name="Arial Black" size="12.0" />
+                        <Font name="Arial" size="12.0" />
                      </font>
                   </Label>
                </children>
@@ -38,7 +38,7 @@
                <children>
                   <Label fx:id="lblAlertaStock" layoutX="14.0" layoutY="14.0" text="ALERTAS STOCK MÍNIMO" textFill="WHITE">
                      <font>
-                        <Font name="Arial Black" size="12.0" />
+                        <Font name="Arial" size="12.0" />
                      </font></Label>
                </children>
             </Pane>
@@ -46,14 +46,14 @@
       </HBox>
       <Pane fx:id="PaneMovimiento" layoutX="27.0" layoutY="157.0" prefHeight="590.0" prefWidth="320.0" style="-fx-background-color: WHITE;" styleClass="panel-root" stylesheets="@css/panel-productos.css">
          <children>
-            <Label fx:id="lblRegistrarMovimiento" layoutX="50.0" layoutY="24.0" prefHeight="32.0" prefWidth="209.0" text="REGISTRAR MOVIMIENTO">
-               <font>
-                  <Font size="14.0" />
-               </font></Label>
+             <Label fx:id="lblRegistrarMovimiento" layoutX="50.0" layoutY="24.0" prefHeight="32.0" prefWidth="209.0" text="REGISTRAR MOVIMIENTO" textFill="#3E2723">
+                <font>
+                   <Font size="14.0" />
+                </font></Label>
             <TextField fx:id="TxtProductoNombre" layoutX="45.0" layoutY="130.0" prefHeight="32.0" prefWidth="218.0" />
             <TextField fx:id="TxtCantidad" layoutX="45.0" layoutY="195.0" prefHeight="32.0" prefWidth="218.0" />
-            <Label fx:id="lblProductoNombre" layoutX="45.0" layoutY="103.0" prefHeight="17.0" prefWidth="148.0" text="Producto (Nombre o ID )" />
-            <Label fx:id="lblCantidad" layoutX="45.0" layoutY="170.0" text="Cantidad" />
+             <Label fx:id="lblProductoNombre" layoutX="45.0" layoutY="103.0" prefHeight="17.0" prefWidth="148.0" text="Producto (Nombre o ID )" textFill="#5D4037" />
+             <Label fx:id="lblCantidad" layoutX="45.0" layoutY="170.0" text="Cantidad" textFill="#5D4037" />
             <ComboBox fx:id="CmbComboBox" layoutX="45.0" layoutY="256.0" prefHeight="25.0" prefWidth="218.0" styleClass="field" />
             <TextArea fx:id="TxtMotivo" layoutX="45.0" layoutY="329.0" prefHeight="160.0" prefWidth="218.0" />
             <Button fx:id="BtnRegistrarMovimiento" layoutX="45.0" layoutY="511.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="218.0" styleClass="btn-primary" text="REGISTRAR MOVIMIENTO">

@@ -59,7 +59,6 @@ public class PanelPrincipalUsuariosController implements Initializable {
         // 2. CONFIGURACIÓN DE COLUMNAS
 
         // === CONFIGURACIÓN DE ID (Numeración automática 1, 2, 3...) ===
-        // Usamos setCellFactory para que sea secuencial visualmente
         colId.setCellFactory(columna -> new TableCell<Usuario, Integer>() {
             @Override
             protected void updateItem(Integer item, boolean vacio) {
@@ -67,7 +66,6 @@ public class PanelPrincipalUsuariosController implements Initializable {
                 if (vacio) {
                     setText(null);
                 } else {
-                    // getIndex() nos da el índice de la fila actual, le sumamos 1
                     setText(String.valueOf(getIndex() + 1));
                 }
             }
@@ -112,9 +110,7 @@ public class PanelPrincipalUsuariosController implements Initializable {
 
         // 4. Asignar acciones a los botones
         btnEliminarUsuario.setOnAction(this::eliminarUsuarioSeleccionado);
-
         btnAgregarUsuario.setOnAction(event -> abrirVentanaUsuario(null));
-
         btnEditarUsuario.setOnAction(event -> {
             Usuario usuarioSeleccionado = tableUsuarios.getSelectionModel().getSelectedItem();
             if (usuarioSeleccionado == null) {
@@ -123,6 +119,29 @@ public class PanelPrincipalUsuariosController implements Initializable {
                 abrirVentanaUsuario(usuarioSeleccionado);
             }
         });
+
+        // ==============================================================================
+        // CONTROL DE ACCESOS: Restricciones automáticas para el rol VENDEDOR
+        // ==============================================================================
+        if (LoginController.usuarioLogueado != null &&
+                LoginController.usuarioLogueado.getRol() == Role.VENDEDOR) {
+
+            // Oculta las acciones de modificación de datos y libera espacio en el diseño
+            btnAgregarUsuario.setVisible(false);
+            btnAgregarUsuario.setManaged(false);
+
+            btnEditarUsuario.setVisible(false);
+            btnEditarUsuario.setManaged(false);
+
+            btnEliminarUsuario.setVisible(false);
+            btnEliminarUsuario.setManaged(false);
+
+            // Oculta la tarjeta informativa de cantidad de Administradores
+            if (CardUsuariosAdmin != null) {
+                CardUsuariosAdmin.setVisible(false);
+                CardUsuariosAdmin.setManaged(false);
+            }
+        }
     }
 
     // --- MÉTODOS DE VENTANAS ---
@@ -140,7 +159,7 @@ public class PanelPrincipalUsuariosController implements Initializable {
 
             Stage stage = new Stage();
             stage.setTitle(usuario == null ? "Agregar Nuevo Usuario" : "Editar Usuario");
-            stage.setScene(new Scene(root, 1200, 768)); // Mantiene tu tamaño personalizado
+            stage.setScene(new Scene(root, 1200, 768));
 
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
@@ -198,6 +217,8 @@ public class PanelPrincipalUsuariosController implements Initializable {
                 if (eliminado != null) {
                     mostrarAlerta("Éxito", "Usuario eliminado", "El usuario fue borrado correctamente.", Alert.AlertType.INFORMATION);
                     cargarUsuarios();
+                } else {
+                    mostrarAlerta("Error", "No se pudo eliminar", "El usuario tiene ventas asociadas y no puede ser eliminado.", Alert.AlertType.WARNING);
                 }
             }
         });

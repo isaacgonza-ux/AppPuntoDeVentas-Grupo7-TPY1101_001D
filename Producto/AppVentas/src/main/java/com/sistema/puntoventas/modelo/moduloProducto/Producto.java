@@ -1,5 +1,8 @@
 package com.sistema.puntoventas.modelo.moduloProducto;
 
+import lombok.Builder;
+
+@Builder
 public class Producto {
     private int id ;
     private String nombre;
@@ -9,13 +12,16 @@ public class Producto {
     private String fechaVenc;
     private int stockActual;
     private int stockMinimo;
-    private String imagen;
+    private Boolean activo = true;
     private UnidadMedida unidadMedida;
     private  double cantidad;
     private TipoProducto tipoProducto;
     private double cantidadDefault;
 
-    public Producto(int id, String nombre, double precioCompra, double precioVenta, Categoria categoria, String fechaVenc, int stockActual, int stockMinimo, String imagen, UnidadMedida unidadMedida,double cantidad, TipoProducto tipoProducto, double cantidadDefault) {
+    public Producto() {
+    }
+
+    public Producto(int id, String nombre, double precioCompra, double precioVenta, Categoria categoria, String fechaVenc, int stockActual, int stockMinimo, Boolean activo, UnidadMedida unidadMedida, double cantidad, TipoProducto tipoProducto, double cantidadDefault) {
         this.id = id;
         this.nombre = nombre;
         this.precioCompra = precioCompra;
@@ -24,22 +30,12 @@ public class Producto {
         this.fechaVenc = fechaVenc;
         this.stockActual = stockActual;
         this.stockMinimo = stockMinimo;
-        this.imagen = imagen;
+        this.activo = activo;
         this.unidadMedida = unidadMedida;
         this.cantidad = cantidad;
         this.tipoProducto = tipoProducto;
         this.cantidadDefault = cantidadDefault;
     }
-
-    // Constructor sobrecargado para mantener compatibilidad con pruebas y llamadas existentes de 12 parámetros
-    public Producto(int id, String nombre, double precioCompra, double precioVenta, Categoria categoria, String fechaVenc, int stockActual, int stockMinimo, String imagen, UnidadMedida unidadMedida, double cantidad, TipoProducto tipoProducto) {
-        this(id, nombre, precioCompra, precioVenta, categoria, fechaVenc, stockActual, stockMinimo, imagen, unidadMedida, cantidad, tipoProducto, cantidad);
-    }
-
-
-    public Producto() {
-    }
-
 
     public int getId() {
         return id;
@@ -65,20 +61,20 @@ public class Producto {
         this.precioCompra = precioCompra;
     }
 
-    public double getPrecioVenta() {
-        return precioVenta;
-    }
-
-    public void setPrecioVenta(double precioVenta) {
-        this.precioVenta = precioVenta;
-    }
-
     public Categoria getCategoria() {
         return categoria;
     }
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public double getPrecioVenta() {
+        return precioVenta;
+    }
+
+    public void setPrecioVenta(double precioVenta) {
+        this.precioVenta = precioVenta;
     }
 
     public String getFechaVenc() {
@@ -105,12 +101,12 @@ public class Producto {
         this.stockMinimo = stockMinimo;
     }
 
-    public String getImagen() {
-        return imagen;
+    public Boolean getActivo() {
+        return activo;
     }
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
     public UnidadMedida getUnidadMedida() {
@@ -152,11 +148,11 @@ public class Producto {
                 ", nombre='" + nombre + '\'' +
                 ", precioCompra=" + precioCompra +
                 ", precioVenta=" + precioVenta +
-                ", categoria='" + categoria + '\'' +
+                ", categoria=" + categoria +
                 ", fechaVenc='" + fechaVenc + '\'' +
                 ", stockActual=" + stockActual +
                 ", stockMinimo=" + stockMinimo +
-                ", imagen='" + imagen + '\'' + 
+                ", activo=" + activo +
                 ", unidadMedida=" + unidadMedida +
                 ", cantidad=" + cantidad +
                 ", tipoProducto=" + tipoProducto +

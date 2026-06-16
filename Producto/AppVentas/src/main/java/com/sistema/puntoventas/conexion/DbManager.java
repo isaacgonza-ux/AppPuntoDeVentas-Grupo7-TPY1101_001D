@@ -54,7 +54,7 @@ public class DbManager {
                 + " fechaVenc TEXT,"
                 + " stockActual INTEGER,"
                 + " stockMinimo INTEGER,"
-                + " imagen TEXT DEFAULT 'IMG',"
+                + " activo BOOLEAN DEFAULT 1,"
                 + " unidadMedida TEXT, "
                 + " cantidad DOUBLE, "
                 + " tipoProducto TEXT,"
@@ -114,6 +114,7 @@ public class DbManager {
         String sql = "CREATE TABLE IF NOT EXISTS historial_inventario ("
                 + " idMovimiento INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + " idProducto INTEGER NOT NULL,"
+                + " nombreProducto TEXT,"
                 + " tipoMovimiento TEXT NOT NULL,"
                 + " cantidad INTEGER NOT NULL,"
                 + " fecha TEXT DEFAULT CURRENT_TIMESTAMP,"
@@ -126,15 +127,53 @@ public class DbManager {
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.createStatement()) {
             stmt.execute(sql);
+            // Agregar columna si la tabla ya existía sin ella
+            try {
+                stmt.execute("ALTER TABLE historial_inventario ADD COLUMN nombreProducto TEXT");
+            } catch (SQLException ignored) {
+                // La columna ya existe
+            }
             System.out.println("Tabla 'historial_inventario' verificada/creada.");
         } catch (SQLException e) {
             System.err.println("Error al crear tabla historial_inventario: " + e.getMessage());
         }
     }
 
+    public void crearTablaSesion() {
+        String sql = "CREATE TABLE IF NOT EXISTS sesion ("
+                + " id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + " idUsuario INTEGER NOT NULL,"
+                + " tokenHash TEXT NOT NULL UNIQUE,"
+                + " fechaCreacion TEXT NOT NULL,"
+                + " FOREIGN KEY (idUsuario) REFERENCES usuario(id)"
+                + ");";
+        try (var conn = DriverManager.getConnection(url);
+             var stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println("Tabla 'sesion' verificada/creada.");
+        } catch (SQLException e) {
+            System.err.println("Error al crear tabla sesion: " + e.getMessage());
+        }
+    }
+
+    public void crearTablaLLM() {
+        String sql = "CREATE TABLE IF NOT EXISTS llm ("
+                + " id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + " key TEXT NOT NULL"
+                + ");";
+        try (var conn = DriverManager.getConnection(url);
+             var stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println("Tabla 'llm' verificada/creada.");
+        } catch (SQLException e) {
+            System.err.println("Error al crear tabla llm: " + e.getMessage());
+        }
+    }
+
     public void crearTodasLasTablas() {
         crearTablaUsuario();
         crearTablaCategoria();
+        insertarCategoriaPorDefecto();
         creartablaVentas();
         crearTablaDetalleVenta();
         crearTablaProductos();
@@ -142,6 +181,8 @@ public class DbManager {
         crearTablaAuditoria();
         crearTablaPlatillo();
         crearTablaDetallePlatillo();
+        crearTablaSesion();
+        crearTablaLLM();
         System.out.println("Inicialización de todas las tablas completada.");
     }
 
@@ -152,7 +193,7 @@ public class DbManager {
             pstmt.setString(1, "Admin");
             pstmt.setString(2, "Admin");
             pstmt.setString(3, "12345678-9");
-            pstmt.setString(4, "admin");
+            pstmt.setString(4, "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"); //admin
             pstmt.setString(5, "99999999");
             pstmt.setString(6, "ADMIN");
             pstmt.setInt(7, 1);
@@ -160,6 +201,26 @@ public class DbManager {
             System.out.println("Usuario administrador verificado/creado.");
         } catch (SQLException e) {
             System.err.println("Error al crear admin: " + e.getMessage());
+        }
+    }
+
+    public void crearUsuarioVendedor() {
+        String sql = "INSERT OR IGNORE INTO usuario (nombre, apellido, rut, password, telefono, rol, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (var conn = DriverManager.getConnection(url);
+             var pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, "Vendedor");
+            pstmt.setString(2, "Juan");
+            pstmt.setString(3, "98765432-1"); // RUT de ejemplo para el vendedor
+            pstmt.setString(4, "vendedor123");  // Contraseña de acceso
+            pstmt.setString(5, "88888888");
+            pstmt.setString(6, "VENDEDOR");    // Rol configurado exactamente como tu Enum (Role.VENDEDOR)
+            pstmt.setInt(7, 1);                // Estado Activo (1)
+
+            pstmt.executeUpdate();
+            System.out.println("Usuario vendedor verificado/creado con éxito.");
+        } catch (SQLException e) {
+            System.err.println("Error al crear vendedor por defecto: " + e.getMessage());
         }
     }
 
@@ -180,6 +241,22 @@ public class DbManager {
             System.err.println("Error al crear tabla categoria: " + e.getMessage());
         }
     }
+
+    //insertar categoria "otros" por defecto en tabla categoria , para cuando se inicia el programa por primera vez y no hay datos
+    public void insertarCategoriaPorDefecto() {
+        String sql = "INSERT OR IGNORE INTO categoria (nombreCategoria, descripcion, activa) VALUES (?, ?, ?)";
+        try (var conn = DriverManager.getConnection(url);
+             var pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, "Otros");
+            pstmt.setString(2, "Categoría por defecto para productos sin clasificación específica");
+            pstmt.setBoolean(3, true);
+            pstmt.executeUpdate();
+            System.out.println("Categoría por defecto 'Otros' verificada/creada.");
+        } catch (SQLException e) {
+            System.err.println("Error al crear categoría por defecto: " + e.getMessage());
+        }
+    }
+
 
     public void crearTablaPlatillo(){
         String sql = "CREATE TABLE IF NOT EXISTS platillo ("
@@ -242,4 +319,5 @@ public class DbManager {
             System.err.println("Error al crear tabla auditoria_eventos: " + e.getMessage());
         }
     }
+
 }

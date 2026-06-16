@@ -31,7 +31,7 @@ public class PruebaBackend {
         EstadisticaService estadisticaService = new EstadisticaService(iestadisticasRepository, productoRepository);
         
         
-        Categoria categoria = new Categoria(1, true, "Bebidas calientes y frías", "Bebidas");
+    /*    Categoria categoria = new Categoria(1, true, "Bebidas calientes y frías", "Bebidas");
         Categoria categoria2 = new Categoria(2, true, "Pasteleria", "Pasteleria");
         Categoria categoria3 = new Categoria(3, true, "Postres ricos", "Postres");
         Categoria categoria4 = new Categoria(4, true, "chatarra", "Comida rapida");
@@ -43,7 +43,7 @@ public class PruebaBackend {
         productoService.registrarCategoria(categoria4);
         productoService.registrarCategoria(categoria5);
         
-        Producto producto = new Producto(1, "Café Americano", 800, 1500, categoria, "2026-12-31", 50, 10, "cafe_americano.jpg", UnidadMedida.UNIDAD, 1.0, TipoProducto.DIRECTO);
+        /*Producto producto = new Producto(1, "Café Americano", 800, 1500, categoria, "2026-12-31", 50, 10, "cafe_americano.jpg", UnidadMedida.UNIDAD, 1.0, TipoProducto.DIRECTO);
         
 
         // 19 productos (DIRECTO y SOLO_INVENTARIO) asociados a categorias existentes
@@ -409,6 +409,6 @@ public class PruebaBackend {
         }
 
 
-        
+        */
     }
 }

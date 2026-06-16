@@ -32,7 +32,7 @@
                             <children>
                                 <Label layoutX="40.0" layoutY="30.0" text="Usuarios activos" textFill="#f7f4f4">
                                     <font>
-                                        <Font name="Arial Black" size="12.0" />
+                                        <Font name="Arial" size="12.0" />
                                     </font>
                                 </Label>
                                 <Label fx:id="lblUsuariosActivos" layoutX="69.0" layoutY="66.0" styleClass="label-metrica" stylesheets="@css/panel-productos.css" />
@@ -42,7 +42,7 @@
                             <children>
                                 <Label layoutX="38.0" layoutY="29.0" text="Usuarios admin" textFill="WHITE">
                                     <font>
-                                        <Font name="Arial Black" size="12.0" />
+                                        <Font name="Arial" size="12.0" />
                                     </font>
                                 </Label>
                                 <Label fx:id="lblUsuariosAdmin" layoutX="70.0" layoutY="66.0" styleClass="label-metrica" />
@@ -52,7 +52,7 @@
                             <children>
                                 <Label layoutX="47.0" layoutY="32.0" text="Usuarios vendedor" textFill="WHITE">
                                     <font>
-                                        <Font name="Arial Black" size="12.0" />
+                                        <Font name="Arial" size="12.0" />
                                     </font>
                                 </Label>
                                 <Label fx:id="lblUsuariosVendedor" layoutX="73.0" layoutY="66.0" styleClass="label-metrica" />

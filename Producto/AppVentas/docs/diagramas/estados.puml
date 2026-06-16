@@ -1,0 +1,45 @@
+@startuml diagrama_estados
+
+title Estados de un Producto: Predicción de Stock
+
+[*] --> Normal
+
+Normal --> Advertencia: días <= 10
+Advertencia --> Critico: días <= 5
+Critico --> Agotado: días <= 0
+
+Agotado --> [*]
+
+Critico --> Normal: Reabastecimiento\nStock > 50%
+Advertencia --> Normal: Reabastecimiento\nStock > 50%
+
+note right of Normal
+  ✓ Stock suficiente
+  - Días restantes: > 10
+  - Riesgo: BAJO (0.2)
+  - Acción: Monitorear
+end note
+
+note right of Advertencia
+  ⚠ Stock bajo
+  - Días restantes: 6-10
+  - Riesgo: MEDIO
+  - Acción: Planificar compra
+end note
+
+note right of Critico
+  🔴 Stock crítico
+  - Días restantes: 1-5
+  - Riesgo: ALTO (0.9)
+  - Acción: Comprar AHORA
+end note
+
+note right of Agotado
+  ❌ Sin stock
+  - Días restantes: 0
+  - Riesgo: CRÍTICO
+  - Acción: Emergencia
+end note
+
+@enduml
+

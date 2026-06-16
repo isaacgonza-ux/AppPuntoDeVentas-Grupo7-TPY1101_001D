@@ -93,6 +93,7 @@ public class PlatilloRepositoryImpl implements IPlatilloRepository {
                 platillo.setPrecio(rs.getDouble("precio"));
                 platillo.setEstado(rs.getBoolean("estado"));
                 platillo.setTipoProducto(TipoProducto.PLATILLO);
+                platillo.setStockActual(rs.getInt("fabricables"));
                 
                 // Cargar la categoría si existe
                 int catId = rs.getInt("catId");
@@ -171,6 +172,7 @@ public class PlatilloRepositoryImpl implements IPlatilloRepository {
                     platillo.setCategoria(null);
                     platillo.setEstado(rs.getBoolean("estado"));
                     platillo.setCostoProduccion(rs.getDouble("costoProduccion"));
+                    platillo.setStockActual(rs.getInt("fabricables"));
                     listaPlatillos.add(platillo);
                     System.out.println("Platillo encontrado por nombre: " + platillo.getNombre());
                 }
@@ -313,6 +315,7 @@ public class PlatilloRepositoryImpl implements IPlatilloRepository {
                     platillo.setId(rs.getInt("id"));
                     platillo.setNombre(rs.getString("nombre"));
                     platillo.setPrecio(rs.getDouble("precio"));
+                    platillo.setStockActual(rs.getInt("fabricables"));
                     // Aquí podrías cargar la categoría y los ingredientes si lo deseas
                     return platillo;
                 }
@@ -365,6 +368,7 @@ public class PlatilloRepositoryImpl implements IPlatilloRepository {
                 platillo.setPrecio(rs.getDouble("precio"));
                 platillo.setEstado(rs.getBoolean("estado"));
                 platillo.setCostoProduccion(rs.getDouble("costoProduccion"));
+                platillo.setStockActual(rs.getInt("fabricables"));
                 platillo.setTipoProducto(TipoProducto.PLATILLO);
                 
                 // Cargamos la categoría correctamente (no null)
@@ -386,7 +390,7 @@ public class PlatilloRepositoryImpl implements IPlatilloRepository {
 
     private List<DetallePlatillo> obtenerIngredientesConUnidadMedida(Connection conn, int idPlatillo) throws SQLException {
         List<DetallePlatillo> ingredientes = new ArrayList<>();
-        String sql = "SELECT d.*, p.nombre, p.stockActual, p.unidadMedida FROM detalle_platillo d " +
+        String sql = "SELECT d.*, p.nombre, p.stockActual, p.unidadMedida, p.cantidad, p.precioCompra FROM detalle_platillo d " +
                      "INNER JOIN producto p ON d.idProducto = p.id WHERE d.idPlatillo = ?";
         
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -407,6 +411,8 @@ public class PlatilloRepositoryImpl implements IPlatilloRepository {
                     if (um != null) {
                         prod.setUnidadMedida(UnidadMedida.valueOf(um));
                     }
+                    prod.setCantidad(rs.getDouble("cantidad"));
+                    prod.setPrecioCompra(rs.getDouble("precioCompra"));
 
                     detalle.setProducto(prod);
                     ingredientes.add(detalle);

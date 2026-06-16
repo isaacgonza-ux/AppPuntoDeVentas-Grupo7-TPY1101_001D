@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="Infinity" maxWidth="Infinity" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sistema.puntoventas.controller.VistaIASqlController">
+   <children>
+      <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-padding: 0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <VBox spacing="20.0" styleClass="panel-root" stylesheets="@css/panel-productos.css">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+               <children>
+                  <Label text="Consultas Inteligentes SQL">
+                     <font>
+                        <Font name="Arial" size="28.0" />
+                     </font>
+                  </Label>
+
+                  <Label text="Escribe en lenguaje natural lo que deseas consultar. Ej: &quot;productos con bajo stock&quot; o &quot;ventas de la semana&quot;" textFill="#8D6E63">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font>
+                  </Label>
+
+                   <HBox spacing="10.0">
+                      <children>
+                         <TextField fx:id="txtPrompt" promptText="Escribe tu consulta en lenguaje natural..." HBox.hgrow="ALWAYS">
+                            <font>
+                               <Font size="14.0" />
+                            </font>
+                         </TextField>
+                         <Button fx:id="btnConfigKey" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="btn-primary" text="⚙️">
+                            <tooltip>
+                               <Tooltip text="Configurar API Key de Gemini" />
+                            </tooltip>
+                         </Button>
+                         <Button fx:id="btnEjecutar" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" styleClass="btn-primary" text="Consultar" />
+                      </children>
+                   </HBox>
+                    <Label fx:id="lblEstadoApi" styleClass="status" text="⚙️ API Key no configurada" />
+                    <Label fx:id="lblSqlGenerado" styleClass="status" text="" visible="false" managed="false" wrapText="true" />
+
+                   <VBox spacing="10.0" styleClass="card" stylesheets="@css/panel-productos.css" VBox.vgrow="ALWAYS">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                     <children>
+                        <Label text="Resultados" textFill="#5D4037">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="tableResultados" prefHeight="400.0" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

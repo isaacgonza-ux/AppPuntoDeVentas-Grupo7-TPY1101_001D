@@ -1,0 +1,74 @@
+@startuml flujo_datos_prediccion_stock
+
+title Flujo de Datos: Predicción de Stock
+
+actor Usuario
+participant "UI\n(Panel)" as UI
+participant "EstadisticaService" as Service
+participant "EstadisticasRepository" as Repository
+participant "ProductoRepository" as ProdRepo
+participant "Base de Datos\n(SQLite)" as BD
+participant "Python\n(Prophet)" as Python
+
+Usuario -> UI: Hace clic en botón\n"Ejecutar Predicción"
+UI -> Service: llamar ejecutarPrediccionStock()
+
+Service -> Service: validarDatosStockParaIA()
+activate Service
+    Service -> Repository: prepararDatosStockParaIA()
+    activate Repository
+        Repository -> BD: SELECT id_producto, stock, fecha
+        BD --> Repository: Datos de productos
+        Repository --> Repository: Generar datos_stock.csv
+    deactivate Repository
+    Repository --> Service: filasExportadas = 15
+
+    alt filasExportadas >= 7
+        Service -> Service: Datos válidos ✓
+    else filasExportadas < 7
+        Service --> UI: return empty List
+        note over UI: Mostrar: "Datos insuficientes"
+    end
+deactivate Service
+
+Service -> Python: ProcessBuilder.start()\n"python prediccion_stock.py"
+activate Python
+    Python -> Python: Leer datos_stock.csv
+    Python -> Python: Agrupar por id_producto
+    Python -> Python: Aplicar Prophet a cada grupo
+    Python -> Python: Predecir 7 días futuros
+    Python -> Python: Calcular demanda_diaria promedio
+    Python --> Service: Output en STDOUT:\n"1,4.5\n2,8.2\n3,2.1"
+deactivate Python
+
+Service -> Service: Parsear output Python
+activate Service
+    loop para cada línea de salida
+        Service -> Service: Split por coma: [id, demanda]
+        Service -> ProdRepo: obtenerStockActual(idProducto)
+        activate ProdRepo
+            ProdRepo -> BD: SELECT stock FROM producto\nWHERE id = ?
+            BD --> ProdRepo: stock = 150
+        deactivate ProdRepo
+
+        Service -> Service: Calcular:\n- diasParaAgotarse = stock / demanda\n- cantidadSugerida = demanda * 7\n- indiceRiesgo = dias <= 5 ? 0.9 : 0.2
+
+        Service -> Service: Crear PrediccionStock(...)
+        Service -> Service: Agregar a List<PrediccionStock>
+    end
+deactivate Service
+
+Service --> UI: return List<PrediccionStock>
+UI -> UI: Mostrar resultados en tabla
+UI --> Usuario: Tabla con predicciones:\n[ID=1, Días=33, Qty=32, Riesgo=BAJO]\n[ID=2, Días=3, Qty=57, Riesgo=ALTO]
+
+note over Python
+    Salida Python: "id_producto,demanda_diaria"
+    Ejemplo:
+    1,4.5
+    2,8.2
+    3,2.1
+end note
+
+@enduml
+

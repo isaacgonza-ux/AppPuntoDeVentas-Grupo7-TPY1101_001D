@@ -159,8 +159,8 @@ public class GeneradorDataSet {
 
     private List<ProductoSeed> insertarProductos(Connection conn, List<Integer> categorias) throws SQLException {
         List<ProductoSeed> list = new ArrayList<>();
-        String sql = "INSERT INTO producto(nombre, precioCompra, precioVenta, idCategoria, fechaVenc, stockActual, stockMinimo, imagen, unidadMedida, cantidad, tipoProducto) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO producto(nombre, precioCompra, precioVenta, idCategoria, fechaVenc, stockActual, stockMinimo, activo, unidadMedida, cantidad, tipoProducto, cantidadDefault) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         List<String> nombres = Arrays.asList(
                 "Harina Panadera", "Azucar Blanca", "Aceite Vegetal", "Leche Entera", "Cafe Molido",
@@ -201,10 +201,11 @@ public class GeneradorDataSet {
                 ps.setString(5, venc.toString());
                 ps.setInt(6, stock);
                 ps.setInt(7, stockMin);
-                ps.setString(8, "img_producto_" + (i + 1) + ".png");
+                ps.setInt(8, 1);
                 ps.setString(9, unidad.name());
                 ps.setDouble(10, cantidadDefault);
                 ps.setString(11, tipo.name());
+                ps.setDouble(12, cantidadDefault);
                 ps.executeUpdate();
 
                 int id = leerGeneratedKey(ps);

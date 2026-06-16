@@ -1,4 +1,4 @@
-package com.sistema.puntoventas;
+/*package com.sistema.puntoventas;
 
 import com.sistema.puntoventas.conexion.DbManager;
 import com.sistema.puntoventas.modelo.MovimientoInventario;
@@ -30,7 +30,7 @@ public class PruebaInventario {
         System.out.println("Registrando movimientos...");
 
         // ---> MOVIMIENTO 1: Para el Producto 1 (Galletas)
-        MovimientoInventario mov1 = new MovimientoInventario(
+        /*MovimientoInventario mov1 = new MovimientoInventario(
                 1, // ID del Producto 1
                 TipoMovimiento.ENTRADA,
                 25, // Sumamos 25
@@ -76,11 +76,11 @@ public class PruebaInventario {
         // 4. Mostrar todo el historial
         System.out.println("\n--- RESULTADOS EN LA BASE DE DATOS ---");
         mostrarTodosLosDatos();
-    }
+    }*/
 
     // --- MÉTODOS AUXILIARES ---
 
-    private static void insertarProductosDePrueba() {
+  /*  private static void insertarProductosDePrueba() {
         String url = "jdbc:sqlite:DBventasInventario.db";
         String sql = "INSERT OR REPLACE INTO producto (id, nombre, precioCompra, precioVenta, categoria, stockActual, stockMinimo) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -134,4 +134,4 @@ public class PruebaInventario {
             System.out.println("Error al leer datos: " + e.getMessage());
         }
     }
-}
+}*/

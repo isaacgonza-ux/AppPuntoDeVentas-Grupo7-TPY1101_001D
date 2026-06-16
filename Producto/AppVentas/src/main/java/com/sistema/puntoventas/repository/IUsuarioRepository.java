@@ -10,6 +10,7 @@ public interface IUsuarioRepository {
     List<Usuario>obtenerUsuarios();
     Usuario obtenerUsuarioPorRut (String rut );
 
+    Usuario obtenerUsuarioPorId(int id);
     Usuario iniciarSesion (String rut, String contraseña);
     Usuario eliminarUsuario(String rut);
     boolean actualizarUsuario(Usuario usuario);

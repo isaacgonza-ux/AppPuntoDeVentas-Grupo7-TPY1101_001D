@@ -9,7 +9,7 @@ import com.sistema.puntoventas.service.ProductoService;
 public class PruebaBackendProductos {
     public static void main(String[] args) {
 
-        System.out.println("--- INICIANDO PRUEBA DE BASE DE DATOS ---");
+      /*  System.out.println("--- INICIANDO PRUEBA DE BASE DE DATOS ---");
 
 
 
@@ -39,9 +39,9 @@ public class PruebaBackendProductos {
         try {
             System.out.println("Enviando producto al servicio...");
 
-           /* productoService.eliminarProducto(1);
+            productoService.eliminarProducto(1);
             productoService.eliminarCategoria(1);
-            productoService.eliminarCategoria(2);*/
+            productoService.eliminarCategoria(2);
 
             // Primero guardamos las categorías, porque los productos dependen de ellas
            productoService.registrarCategoria(categoria1);
@@ -94,5 +94,7 @@ public class PruebaBackendProductos {
         }
 
         System.out.println("--- FIN DE LA PRUEBA ---");
+        */
     }
+
 }

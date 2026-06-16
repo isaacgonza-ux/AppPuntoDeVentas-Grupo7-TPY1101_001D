@@ -15,6 +15,8 @@ import com.sistema.puntoventas.modelo.ventaAplicacion;
 import com.sistema.puntoventas.service.PlatilloService;
 import com.sistema.puntoventas.service.ProductoService;
 import com.sistema.puntoventas.service.VentaService;
+import com.sistema.puntoventas.util.AlertaCamposVacios;
+
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -81,7 +83,15 @@ public class VentaController {
         cargarCatalogos();
         configurarAutoComplete();
         configurarCalculoTotal();
+
+        //para la primera vez que carga la vista, marca en rojo el textfield si no hay texto
+        AlertaCamposVacios.resaltarSiVacio(textFieldProducto, textfieldTipoPago, textfieldTotal, textfieldFecha); 
+
+        // Configurar validación automática para los campos requeridos usando resaltarSiVacio
+        AlertaCamposVacios.configurarValidacionAutomatica(textFieldProducto, textfieldTipoPago, textfieldTotal, textfieldFecha);
     }
+   
+    
 
     /**
      * Configura el mapeo de las celdas y el redimensionamiento de las columnas.

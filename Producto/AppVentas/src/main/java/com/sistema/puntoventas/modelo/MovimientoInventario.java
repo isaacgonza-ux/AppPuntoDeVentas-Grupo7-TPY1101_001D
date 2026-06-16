@@ -1,27 +1,31 @@
 package com.sistema.puntoventas.modelo;
 
-import java.time.LocalDateTime;
+import lombok.Builder;
 
+import java.time.LocalDateTime;
+@Builder
 public class MovimientoInventario {
     private int idMovimiento;
     private int idProducto;
+    private String nombreProducto; // Para mostrar el nombre del producto en el historial
     private TipoMovimiento tipoMovimiento; // Usamos el Enum
     private int cantidad;
     private LocalDateTime fecha; // Mejor que String para manejo de fechas
     private String motivo;
     private int idUsuario;
 
-    // Constructor vacío
-    public MovimientoInventario() {}
-
-    // Constructor con parámetros (sin ID, ya que la BD suele autogenerarlo)
-    public MovimientoInventario(int idProducto, TipoMovimiento tipoMovimiento, int cantidad, String motivo, int idUsuario) {
+    public MovimientoInventario(int idMovimiento, int idProducto, String nombreProducto, TipoMovimiento tipoMovimiento, int cantidad, LocalDateTime fecha, String motivo, int idUsuario) {
+        this.idMovimiento = idMovimiento;
         this.idProducto = idProducto;
+        this.nombreProducto = nombreProducto;
         this.tipoMovimiento = tipoMovimiento;
         this.cantidad = cantidad;
-        this.fecha = LocalDateTime.now();
+        this.fecha = fecha;
         this.motivo = motivo;
         this.idUsuario = idUsuario;
+    }
+
+    public MovimientoInventario() {
     }
 
     public int getIdMovimiento() {
@@ -38,6 +42,14 @@ public class MovimientoInventario {
 
     public void setIdProducto(int idProducto) {
         this.idProducto = idProducto;
+    }
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
     }
 
     public TipoMovimiento getTipoMovimiento() {
@@ -85,6 +97,7 @@ public class MovimientoInventario {
         return "MovimientoInventario{" +
                 "idMovimiento=" + idMovimiento +
                 ", idProducto=" + idProducto +
+                ", nombreProducto='" + nombreProducto + '\'' +
                 ", tipoMovimiento=" + tipoMovimiento +
                 ", cantidad=" + cantidad +
                 ", fecha=" + fecha +

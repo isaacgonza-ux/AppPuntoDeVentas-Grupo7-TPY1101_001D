@@ -176,7 +176,7 @@ public class EstadisticasRepositoryImpl implements IEstadisticasRepository {
                 "        dp.cantidadIngrediente AS cantidad_total " +
                 "    FROM detalle_venta dv " +
                 "    INNER JOIN venta v ON dv.idVenta = v.idVenta " +
-                "    INNER JOIN detalle_platillo dp ON dv.idPlatillo = dv.idPlatillo " +
+                "    INNER JOIN detalle_platillo dp ON dp.idPlatillo = dv.idPlatillo " +
                 "    WHERE v.estado = 1 AND dv.idPlatillo IS NOT NULL" +
                 ") AS consumo_global " +
                 "WHERE idProducto IS NOT NULL " +
@@ -213,7 +213,7 @@ public class EstadisticasRepositoryImpl implements IEstadisticasRepository {
         }
 
         // Unimos historial y producto, y aplicamos el mismo filtro de fecha
-        String sql = "SELECT COALESCE(SUM(h.cantidad * p.precioCompra), 0) AS total "
+        String sql = "SELECT COALESCE(SUM(ABS(h.cantidad) * p.precioCompra), 0) AS total "
                 + "FROM historial_inventario h "
                 + "INNER JOIN producto p ON p.id = h.idProducto "
                 + "WHERE h.tipoMovimiento IN ('MERMA', 'AJUSTE') "
@@ -335,7 +335,7 @@ public class EstadisticasRepositoryImpl implements IEstadisticasRepository {
         }
 
         String sql = "SELECT id, nombre, precioVenta, precioCompra, stockActual, stockMinimo, " +
-                     "fechaVenc, imagen, unidadMedida, cantidad, tipoProducto " +
+                     "fechaVenc,activo, unidadMedida, cantidad, tipoProducto " +
                      "FROM producto WHERE id IN (" + placeholders + ")";
 
         try (Connection conn = DriverManager.getConnection(url);
@@ -356,7 +356,7 @@ public class EstadisticasRepositoryImpl implements IEstadisticasRepository {
                     producto.setStockActual(rs.getInt("stockActual"));
                     producto.setStockMinimo(rs.getInt("stockMinimo"));
                     producto.setFechaVenc(rs.getString("fechaVenc"));
-                    producto.setImagen(rs.getString("imagen"));
+                    producto.setActivo(rs.getBoolean("activo"));
                     producto.setUnidadMedida(mapUnidadMedida(rs.getString("unidadMedida")));
                     producto.setCantidad(rs.getDouble("cantidad"));
                     producto.setTipoProducto(mapTipoProducto(rs.getString("tipoProducto")));

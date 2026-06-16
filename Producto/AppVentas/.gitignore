@@ -20,6 +20,17 @@ datos_ventas.csv
 /modelos_ia
 *.csv
 
+# IA SQL - datos sensibles 
+src/main/java/com/sistema/puntoventas/util/ia_sql/input.json
+src/main/java/com/sistema/puntoventas/util/ia_sql/respuesta.json
+
+# Python cache
+__pycache__/
+*.pyc
+
+#markdown
+*.md
+
 ### Eclipse ###
 .apt_generated
 .classpath
@@ -45,3 +56,5 @@ build/
 ### Mac OS ###
 .DS_Store
 
+#entorno de python
+/venv/

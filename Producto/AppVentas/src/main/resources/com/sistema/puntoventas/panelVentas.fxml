@@ -14,13 +14,13 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="586.0" prefWidth="897.0" stylesheets="@css/panel-productos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sistema.puntoventas.controller.VentaController">
    <children>
-      <TabPane layoutX="-4.0" layoutY="-4.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="547.0" prefWidth="745.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.9949229410999578" AnchorPane.topAnchor="-4.0">
+      <TabPane layoutX="-4.0" layoutY="-4.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="591.0" prefWidth="896.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="-4.0">
         <tabs>
-          <Tab text="tabla ventas">
+          <Tab text="Mis Ventas">
             <content>
               <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                      <children>
-                        <TableView id="idTableView" fx:id="idTablaVentas" editable="true" layoutX="43.0" layoutY="103.33403753389665" prefHeight="412.0" prefWidth="809.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="43.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="103.0">
+                        <TableView id="idTableView" fx:id="idTablaVentas" editable="true" layoutX="43.0" layoutY="103.33403753389665" prefHeight="412.0" prefWidth="809.0" stylesheets="@css/panel-productos.css" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="43.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="103.0">
                           <columns>
                             <TableColumn fx:id="ColFecha" sortable="false" text="fecha" />
                             <TableColumn fx:id="ColProductos" sortable="false" text="Productos" />
@@ -39,28 +39,32 @@
                             </Menu>
                           </menus>
                         </MenuBar>
-                        <Button layoutX="775.0" layoutY="60.0" mnemonicParsing="false" onAction="#eliminarVenta" styleClass="field" text="eliminar" AnchorPane.topAnchor="61.0" />
-                        <Button layoutX="43.0" layoutY="60.0" mnemonicParsing="false" onAction="#guardarTablaEnBD" styleClass="field" text="Guardar" />
+                        <Button layoutX="775.0" layoutY="61.0" mnemonicParsing="false" onAction="#eliminarVenta" styleClass="btn-primary" text="eliminar" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="61.0" />
+                        <Button layoutX="43.0" layoutY="61.0" mnemonicParsing="false" onAction="#guardarTablaEnBD" styleClass="btn-primary" stylesheets="@css/panel-productos.css" text="Guardar" AnchorPane.leftAnchor="43.0" AnchorPane.topAnchor="61.0" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="agregar venta">
+          <Tab text="Agregar Venta">
             <content>
               <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                      <children>
-                        <Text layoutX="97.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Fecha" AnchorPane.leftAnchor="97.0" />
-                        <Text layoutX="83.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Productos" wrappingWidth="62.15299606323242" AnchorPane.leftAnchor="83.0" />
-                        <Text layoutX="84.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Tipo Pago" AnchorPane.leftAnchor="84.0" />
-                        <Text layoutX="91.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Total" AnchorPane.leftAnchor="91.0" />
-                        <Text layoutX="78.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Descripcion" AnchorPane.leftAnchor="78.0" />
-                        <Button layoutX="340.0" layoutY="452.0" mnemonicParsing="false" onAction="#agregarVenta" styleClass="btn-primary" text="agregar" AnchorPane.bottomAnchor="38.003339273638915" />
-                        <TextField fx:id="textfieldFecha" layoutX="259.0" layoutY="125.0" styleClass="field" AnchorPane.leftAnchor="259.0" />
-                        <TextField fx:id="textFieldProducto" layoutX="259.0" layoutY="184.0" styleClass="field" AnchorPane.leftAnchor="259.0" />
-                        <TextField fx:id="textfieldTipoPago" layoutX="259.0" layoutY="244.0" styleClass="field" AnchorPane.leftAnchor="259.0" />
-                        <TextField fx:id="textfieldTotal" layoutX="259.0" layoutY="303.0" styleClass="field" AnchorPane.leftAnchor="259.0" />
-                        <TextField fx:id="textfieldDescripcion" layoutX="259.0" layoutY="359.0" styleClass="field" AnchorPane.leftAnchor="259.0" />
-                        <Button layoutX="461.0" layoutY="191.0" mnemonicParsing="false" onAction="#recargarSugerenciaProductos" text="recargar" />
+                        <AnchorPane layoutX="194.0" layoutY="101.0" prefHeight="495.0" prefWidth="623.0" style="-fx-background-color: #dce6f6; -fx-border-color: grey; -fx-border-width: 1px; -fx-border-radius: 20; -fx-background-radius: 20;">
+                           <children>
+                              <Text layoutX="120.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Fecha" />
+                              <Text layoutX="120.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Productos" wrappingWidth="100.0" />
+                              <Text layoutX="120.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Tipo Pago" />
+                              <Text layoutX="120.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Total" />
+                              <Text layoutX="120.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Descripción" />
+                              <Button layoutX="272.0" layoutY="407.0" mnemonicParsing="false" onAction="#agregarVenta" styleClass="btn-primary" text="Agregar" />
+                              <TextField fx:id="textfieldFecha" layoutX="250.0" layoutY="50.0" prefWidth="200.0" style="-fx-border-color: grey; -fx-border-width: 1px; -fx-border-radius: 5; -fx-background-radius: 5;" styleClass="field" />
+                              <TextField fx:id="textFieldProducto" layoutX="250.0" layoutY="115.0" prefWidth="200.0" style="-fx-border-color: grey; -fx-border-width: 1px; -fx-border-radius: 5; -fx-background-radius: 5;" styleClass="field" />
+                              <TextField fx:id="textfieldTipoPago" layoutX="250.0" layoutY="180.0" prefWidth="200.0" style="-fx-border-color: grey; -fx-border-width: 1px; -fx-border-radius: 5; -fx-background-radius: 5;" styleClass="field" />
+                              <TextField fx:id="textfieldTotal" layoutX="250.0" layoutY="245.0" prefWidth="200.0" style="-fx-border-color: grey; -fx-border-width: 1px; -fx-border-radius: 5; -fx-background-radius: 5;" styleClass="field" />
+                              <TextField fx:id="textfieldDescripcion" layoutX="250.0" layoutY="310.0" prefWidth="200.0" style="-fx-border-color: grey; -fx-border-width: 1px; -fx-border-radius: 5; -fx-background-radius: 5;" styleClass="field" />
+                              <Button layoutX="465.0" layoutY="122.0" mnemonicParsing="false" onAction="#recargarSugerenciaProductos" text="🔄" />
+                           </children>
+                        </AnchorPane>
                      </children>
                   </AnchorPane>
             </content>

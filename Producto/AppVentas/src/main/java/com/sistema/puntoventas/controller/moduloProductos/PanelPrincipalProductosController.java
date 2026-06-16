@@ -90,6 +90,7 @@ public class PanelPrincipalProductosController {
 
 
     private ProductoService productoService;
+    private java.util.List<String> nombresCriticos;
 
     
     
@@ -106,6 +107,7 @@ public class PanelPrincipalProductosController {
         colCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
         colTipoProducto.setCellValueFactory(new PropertyValueFactory<>("tipoProducto"));
 
+        configurarRowFactory();
         obtenerProductos();
         actualizarMetricas();
 
@@ -117,6 +119,22 @@ public class PanelPrincipalProductosController {
             if(newSelection != null){
                 System.out.println("RECETA");
              //   btnVerReceta.setDisable(!newSelection.getTipoProducto().name().equals("PLATILLO"));
+            }
+        });
+    }
+
+    private void configurarRowFactory() {
+        tableProductos.setRowFactory(tv -> new TableRow<Producto>() {
+            @Override
+            protected void updateItem(Producto item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty || nombresCriticos == null) {
+                    setStyle("");
+                } else if (nombresCriticos.contains(item.getNombre())) {
+                    setStyle("-fx-background-color: #ffcccc;");
+                } else {
+                    setStyle("");
+                }
             }
         });
     }
@@ -212,6 +230,8 @@ public class PanelPrincipalProductosController {
                 productoService = new ProductoService();
             }
 
+            nombresCriticos = productoService.obtenerNombreStockCritico();
+
 
             java.util.List<Producto> productos = productoService.obtenerProductos();
 
@@ -232,7 +252,7 @@ public class PanelPrincipalProductosController {
                 items.setAll(productos);
             }
 
-            MensajesAlerta.mostrarMensaje("ÉXITO","Productos cargados correctamente: " + productos.size(), Alert.AlertType.INFORMATION);
+            //MensajesAlerta.mostrarMensaje("ÉXITO","Productos cargados correctamente: " + productos.size(), Alert.AlertType.INFORMATION);
         }catch (Exception e){
             MensajesAlerta.mostrarMensaje("ERROR","Error al obtener productos: " + e.getMessage(), Alert.AlertType.ERROR);
             e.printStackTrace();
@@ -259,8 +279,17 @@ public class PanelPrincipalProductosController {
     public void eliminarProducto(javafx.event.ActionEvent event){
         Producto productoSeleccionado  =tableProductos.getSelectionModel().getSelectedItem();
 
+
+
         if(productoSeleccionado == null){
             mostrarMensaje("AVISO","Por favor seleccione un producto para eliminar", Alert.AlertType.WARNING);
+            return;
+        }
+
+        String nombreAeliminar = productoSeleccionado.getNombre();
+        boolean existeNombre = productoService.existeNombre(nombreAeliminar,0);
+        if(!existeNombre){
+            mostrarMensaje("AVISO","El producto seleccionado no existe ", Alert.AlertType.WARNING);
             return;
         }
 

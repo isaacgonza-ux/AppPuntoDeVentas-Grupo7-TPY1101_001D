@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sistema.puntoventas.controller.LoginController">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #FFF5EB;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sistema.puntoventas.controller.LoginController">
    <stylesheets>
       <URL value="@css/LoginVista.css" />
    </stylesheets>
@@ -32,12 +32,13 @@
       <!-- Contenedor Derecho (Formulario Centrado) -->
       <VBox alignment="CENTER" layoutX="800.0" prefHeight="1080.0" prefWidth="1120.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="800.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Pane prefHeight="550.0" prefWidth="500.0" styleClass="login-card" maxWidth="500.0">
+            <Pane maxWidth="500.0" prefHeight="550.0" prefWidth="500.0" styleClass="login-card">
                <children>
                   <Label layoutX="114.0" layoutY="50.0" text="Control Inventario">
-                     <font>
-                        <Font name="System Bold" size="32.0" />
-                     </font>
+                        <font>
+                            <Font name="Arial" size="32.0" />
+                        </font>
+                        <textFill>#3E2723</textFill>
                   </Label>
 
                   <Label layoutX="85.0" layoutY="110.0" text="Ingresa tus credenciales para acceder" textFill="#666666">
@@ -48,20 +49,20 @@
 
                   <!-- Campo RUT -->
                   <Label layoutX="50.0" layoutY="190.0" text="RUT">
-                     <font> <Font name="System Bold" size="14.0" /> </font>
+                     <font> <Font name="Arial" size="14.0" /> </font>
                   </Label>
                   <TextField fx:id="rutTextField" layoutX="50.0" layoutY="215.0" prefHeight="50.0" prefWidth="400.0" promptText="12.345.678-9" style="-fx-font-size: 16px;" />
 
                   <!-- Campo Contraseña -->
                   <Label layoutX="50.0" layoutY="290.0" text="Contraseña">
-                     <font> <Font name="System Bold" size="14.0" /> </font>
+                     <font> <Font name="Arial" size="14.0" /> </font>
                   </Label>
                   <PasswordField fx:id="passwordField" layoutX="50.0" layoutY="315.0" prefHeight="50.0" prefWidth="400.0" style="-fx-font-size: 16px;" />
 
                   <!-- Botón -->
-                  <Button fx:id="continuarButton" layoutX="50.0" layoutY="410.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="60.0" prefWidth="400.0" styleClass="button" text="CONTINUAR">
+                  <Button fx:id="continuarButton" defaultButton="true" layoutX="50.0" layoutY="410.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="60.0" prefWidth="400.0" styleClass="button" text="CONTINUAR">
                      <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="Arial" size="18.0" />
                      </font>
                   </Button>
                </children>

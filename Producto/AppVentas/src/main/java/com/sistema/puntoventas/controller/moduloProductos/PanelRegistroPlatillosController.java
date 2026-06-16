@@ -7,6 +7,8 @@ import com.sistema.puntoventas.modelo.moduloProducto.Producto;
 import com.sistema.puntoventas.modelo.moduloProducto.TipoProducto;
 import com.sistema.puntoventas.service.PlatilloService;
 import com.sistema.puntoventas.service.ProductoService;
+import com.sistema.puntoventas.util.AlertaCamposVacios;
+
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -76,6 +78,10 @@ public class PanelRegistroPlatillosController {
     private ObservableList<DetallePlatillo> listaIngredientesTemporal = FXCollections.observableArrayList();
 
     public void initialize() throws Exception {
+
+
+        AlertaCamposVacios.resaltarSiVacio(txtNombre,txtPrecio,txtCantidad);
+        AlertaCamposVacios.configurarValidacionAutomatica(txtNombre,txtPrecio,txtCantidad);
         productoService = new ProductoService();
         platilloService = new PlatilloService();
         try {
@@ -134,11 +140,10 @@ public class PanelRegistroPlatillosController {
         colUnidadMedida.setText("Unidad Medida");
         
         colCostoProduccion.setCellValueFactory(cellData -> {
-            double costoUnitario = cellData.getValue().getProducto().getPrecioCompra();
-            double cantidad = cellData.getValue().getCantidadIngrediente();
-            return new SimpleDoubleProperty(costoUnitario * cantidad).asObject();
+            double costoIngrediente = platilloService.calcularCostoIngrediente(cellData.getValue());
+            return new SimpleDoubleProperty(costoIngrediente).asObject();
         });
-        colCostoProduccion.setText("Costo Total");
+        colCostoProduccion.setText("Costo Ingrediente");
     }
 
     @FXML
@@ -169,6 +174,7 @@ public class PanelRegistroPlatillosController {
             
             listaIngredientesTemporal.add(detalle);
             actualizarCostoTotalEnPantalla();
+            tableProductos.refresh();
             
             cmbIngredientes.getSelectionModel().clearSelection();
             txtCantidad.clear();
@@ -195,11 +201,22 @@ public class PanelRegistroPlatillosController {
                 return;
             }
 
+            double precio = Double.parseDouble(txtPrecio.getText().trim());
+            if(precio <= 0){
+                lblEstado.setText("Error: Precio debe ser mayor a cero");
+                lblEstado.setTextFill(Color.RED);
+                return;
+            }
+
+
+
             if (cmbCategoria.getValue() == null) {
                 lblEstado.setText("Error: Debes seleccionar una categoría.");
                 lblEstado.setTextFill(Color.RED);
                 return;
             }
+
+
 
             // 2. Construir el objeto PLATILLO
             Platillo nuevoPlatillo = new Platillo();
@@ -317,6 +334,7 @@ public class PanelRegistroPlatillosController {
         if (platillo.getIngrediente() != null && !platillo.getIngrediente().isEmpty()) {
             listaIngredientesTemporal.addAll(platillo.getIngrediente());
             actualizarCostoTotalEnPantalla();
+            tableProductos.refresh();
         }
 
         btnRegistrarPlatillo.setText("Actualizar Platillo");
@@ -325,23 +343,21 @@ public class PanelRegistroPlatillosController {
 
 
     private void actualizarCostoTotalEnPantalla() {
-        double costoTotal = 0.0;
+        try {
+            Platillo platilloTemporal = new Platillo();
+            platilloTemporal.setIngrediente(new ArrayList<>(listaIngredientesTemporal));
 
-        // Recorremos la lista que está llenando la tabla en pantalla
-        for (DetallePlatillo detalle : listaIngredientesTemporal) {
-            if (detalle.getProducto() != null) {
-                double costoIngrediente = detalle.getProducto().getPrecioCompra();
-                double cantidadUtilizada = detalle.getCantidadIngrediente();
+            // El service aplica toda la logica de calculo; el controller solo muestra.
+            platilloService.calcularCostoProduccion(platilloTemporal);
+            double costoTotal = platilloTemporal.getCostoProduccion();
 
-                // Sumamos al total general
-                costoTotal += (costoIngrediente * cantidadUtilizada);
+            if (lblCostoTotal != null) {
+                lblCostoTotal.setText(String.format("Costo Produccion: $%.2f", costoTotal));
             }
-        }
-
-        // Mostramos el total acumulado en el Label de la pantalla
-        if (lblCostoTotal != null) {
-            lblCostoTotal.setText(String.format("Costo Producción: $%.2f", costoTotal));
-            System.out.println("Costo total actualizado en pantalla: " + costoTotal);
+        } catch (Exception e) {
+            if (lblCostoTotal != null) {
+                lblCostoTotal.setText("Costo Produccion: $0.00");
+            }
         }
     }
 
@@ -353,6 +369,8 @@ public class PanelRegistroPlatillosController {
         cmbIngredientes.getSelectionModel().clearSelection();
         txtCantidad.clear();
         listaIngredientesTemporal.clear();
+        tableProductos.refresh();
+        actualizarCostoTotalEnPantalla();
     }
 
 }

@@ -3,6 +3,7 @@ package com.sistema.puntoventas.controller;
 import com.sistema.puntoventas.modelo.MovimientoInventario;
 import com.sistema.puntoventas.modelo.TipoMovimiento;
 import com.sistema.puntoventas.repository.impl.MovimientoRepositoryImpl;
+import com.sistema.puntoventas.repository.impl.ProductoRepositoryImpl;
 import com.sistema.puntoventas.service.InventarioService;
 
 import javafx.collections.FXCollections;
@@ -35,7 +36,7 @@ public class PanelInventarioController implements Initializable {
     // Cambiado de String a LocalDateTime para que coincida con tu Modelo
     @FXML private TableColumn<MovimientoInventario, LocalDateTime> ColFechaHora;
 
-    @FXML private TableColumn<MovimientoInventario, Integer> ColProducto;
+    @FXML private TableColumn<MovimientoInventario, String> ColProducto;
     @FXML private TableColumn<MovimientoInventario, String> ColTipo;
     @FXML private TableColumn<MovimientoInventario, Integer> ColCantidad;
     @FXML private TableColumn<MovimientoInventario, String> ColMotivo;
@@ -48,19 +49,24 @@ public class PanelInventarioController implements Initializable {
 
     // --- VARIABLES DEL BACKEND ---
     private MovimientoRepositoryImpl movimientoRepo;
+    private ProductoRepositoryImpl productoRepo;
     private InventarioService inventarioService;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // 1. Inicializar Repositorios y Servicios
         movimientoRepo = new MovimientoRepositoryImpl();
+        productoRepo = new ProductoRepositoryImpl();
+        // Conectar el repositorio de productos al de movimientos
+        movimientoRepo.setProductoRepo(productoRepo);
+        inventarioService = new InventarioService(movimientoRepo, productoRepo);
 
         // 2. Configurar el ComboBox con los valores del Enum
         CmbComboBox.setItems(FXCollections.observableArrayList(TipoMovimiento.values()));
 
         // 3. Configurar las columnas de la tabla
         ColFechaHora.setCellValueFactory(new PropertyValueFactory<>("fecha"));
-        ColProducto.setCellValueFactory(new PropertyValueFactory<>("idProducto"));
+        ColProducto.setCellValueFactory(new PropertyValueFactory<>("nombreProducto"));
         ColTipo.setCellValueFactory(new PropertyValueFactory<>("tipoMovimiento"));
         ColCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
         ColMotivo.setCellValueFactory(new PropertyValueFactory<>("motivo"));
@@ -98,42 +104,71 @@ public class PanelInventarioController implements Initializable {
 
     private void registrarMovimientoAction(ActionEvent event) {
         try {
+            // VALIDACIÓN: Campos incompletos
             if (TxtProductoNombre.getText().isEmpty() || TxtCantidad.getText().isEmpty() || CmbComboBox.getValue() == null) {
                 mostrarAlerta("Error", "Campos incompletos", "Por favor llena el Producto, Cantidad y Tipo de Movimiento.", Alert.AlertType.WARNING);
                 return;
             }
 
-            int idProducto = Integer.parseInt(TxtProductoNombre.getText());
+            // RECOLECTAR DATOS DE LA UI (controller "tonto")
+            int idProducto = obtenerIdProducto(TxtProductoNombre.getText());
+            if (idProducto == -1) {
+                mostrarAlerta("Error", "Producto no encontrado", "El producto ingresado no existe en la base de datos.", Alert.AlertType.WARNING);
+                return;
+            }
+
             int cantidad = Integer.parseInt(TxtCantidad.getText());
             TipoMovimiento tipo = CmbComboBox.getValue();
             String motivo = TxtMotivo.getText() != null ? TxtMotivo.getText() : "Sin motivo";
             int idUsuarioAdmin = 1;
 
-            MovimientoInventario nuevoMovimiento = new MovimientoInventario(idProducto, tipo, cantidad, motivo, idUsuarioAdmin);
+            // LLAMAR AL SERVICIO - El servicio maneja TODO (creación, fecha, validación, BD)
+            MovimientoInventario movimientoCreado = inventarioService.registrarMovimientoInventario(
+                    idProducto, tipo, cantidad, motivo, idUsuarioAdmin);
 
-            boolean registrado = movimientoRepo.registrarMovimiento(nuevoMovimiento);
-
-            // Para la actualización de stock: si es entrada suma, si no (salida/merma) resta
-            int cambioStock = (tipo == TipoMovimiento.ENTRADA) ? cantidad : -cantidad;
-            boolean stockActualizado = movimientoRepo.actualizarStockFisico(idProducto, cambioStock);
-
-            if (registrado && stockActualizado) {
+            // VERIFICAR RESULTADO
+            if (movimientoCreado != null) {
                 mostrarAlerta("Éxito", "Movimiento Registrado", "El inventario se ha actualizado correctamente.", Alert.AlertType.INFORMATION);
 
+                // LIMPIAR FORMULARIO
                 TxtProductoNombre.clear();
                 TxtCantidad.clear();
                 TxtMotivo.clear();
                 CmbComboBox.getSelectionModel().clearSelection();
 
-                cargarHistorial();
+                // ACTUALIZAR TABLA: Añadir el movimiento creado (ya tiene la fecha del servidor)
+                ObservableList<MovimientoInventario> elementos = tablaMovimientos.getItems();
+                if (elementos == null) {
+                    elementos = FXCollections.observableArrayList();
+                    tablaMovimientos.setItems(elementos);
+                }
+                elementos.add(0, movimientoCreado); // Añadir al principio
+                tablaMovimientos.refresh();
+                tablaMovimientos.scrollTo(0); // Asegurar que sea visible
             } else {
                 mostrarAlerta("Error", "Error en Base de Datos", "No se pudo registrar el movimiento.", Alert.AlertType.ERROR);
             }
 
         } catch (NumberFormatException e) {
-            mostrarAlerta("Error de formato", "Datos inválidos", "El Producto y la Cantidad deben ser números enteros.", Alert.AlertType.ERROR);
+            mostrarAlerta("Error de formato", "Datos inválidos", "La Cantidad debe ser un número entero.", Alert.AlertType.ERROR);
         } catch (Exception e) {
             mostrarAlerta("Error fatal", "Excepción", e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
+
+    // Método para obtener el ID del producto por nombre o por ID directo
+    private int obtenerIdProducto(String entrada) {
+        try {
+            // Intentar como número (ID directo)
+            return Integer.parseInt(entrada);
+        } catch (NumberFormatException e) {
+            // Si no es número, buscar por nombre
+            List<com.sistema.puntoventas.modelo.moduloProducto.Producto> productos = productoRepo.obtenerProductoPorNombre(entrada);
+            if (!productos.isEmpty()) {
+                return productos.get(0).getId();
+            }
+            return -1;
         }
     }
 

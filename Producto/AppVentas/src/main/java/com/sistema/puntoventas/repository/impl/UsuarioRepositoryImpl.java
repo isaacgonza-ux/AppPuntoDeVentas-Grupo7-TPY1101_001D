@@ -40,13 +40,12 @@ public class UsuarioRepositoryImpl implements IUsuarioRepository {
 
     @Override
     public Usuario iniciarSesion(String rut, String contraseña) {
-        // Se utiliza 'password' para la consulta SQL
-        String sql = "SELECT * FROM Usuario WHERE rut = ? AND password = ?";
+        // Buscar por RUT únicamente; la validación del hash la hace UsuarioService
+        String sql = "SELECT * FROM Usuario WHERE rut = ?";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, rut);
-            ps.setString(2, contraseña);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -55,6 +54,23 @@ public class UsuarioRepositoryImpl implements IUsuarioRepository {
             }
         } catch (SQLException e) {
             System.err.println("Error en inicio de sesión: " + e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public Usuario obtenerUsuarioPorId(int id) {
+        String sql = "SELECT * FROM Usuario WHERE id = ?";
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapearUsuario(rs);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener usuario por ID: " + e.getMessage());
         }
         return null;
     }

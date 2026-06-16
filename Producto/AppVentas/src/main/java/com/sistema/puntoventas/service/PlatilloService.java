@@ -21,6 +21,10 @@ public class PlatilloService {
         this.auditoriaService = new AuditoriaService();
     }
 
+    public boolean existeNomre(String nombre, int id){
+        return platilloRepository.existeNombre(nombre, id);
+    }
+
 
 
     public void registrarPlatillo(Platillo platillo) throws Exception {
@@ -83,27 +87,47 @@ public class PlatilloService {
     public List<Platillo> obtenerPlatillosConRecetaCompleta() throws Exception {
         return platilloRepository.obtenerPlatillosConRecetaCompleta();
     }
-    
 
-    public void calcularCostoProduccion(Platillo platillo){
-        double costoTotal = 0.0;
-        
-        if(platillo.getIngrediente() != null){
-            for (DetallePlatillo detalle : platillo.getIngrediente()){
-                if(detalle.getProducto() != null){
-                    double costoIngrediente = detalle.getProducto().getPrecioCompra();
-                    double cantidadUtilizada = detalle.getCantidadIngrediente();
-                    costoTotal += costoIngrediente * cantidadUtilizada;
-                    System.out.println(costoTotal);
 
-                }
-            }
-            costoTotal = Math.round(costoTotal * 10.0)/10.0;
-            
-            platillo.setCostoProduccion(costoTotal);
+    public double calcularCostoIngrediente(DetallePlatillo detalle) {
+        double  costoIngrediente = 0.0;
+        if (detalle == null || detalle.getProducto() == null) {
+            return 0.0;
+        }
+
+        Producto producto = detalle.getProducto();
+        double precioCompra = producto.getPrecioCompra();
+        double cantidadUtilizada = detalle.getCantidadIngrediente();
+
+        if (precioCompra <= 0 || cantidadUtilizada <= 0) {
+            return 0.0;
+        }
+
+        UnidadMedida unidad = producto.getUnidadMedida();
+
+
+        if (unidad == UnidadMedida.GRAMOS || unidad == UnidadMedida.MILILITROS) {
+            costoIngrediente = precioCompra * (cantidadUtilizada / 1000.0);
+            System.out.println("costo por ingrediente" + costoIngrediente  );
+            return costoIngrediente;
         }
 
 
+        costoIngrediente = precioCompra * cantidadUtilizada;
+        System.out.println("costo por ingrediente" + costoIngrediente  );
+        return costoIngrediente;
+    }
+
+    public void calcularCostoProduccion(Platillo platillo) {
+        double costoTotal = 0.0;
+
+        if (platillo.getIngrediente() != null) {
+            for (DetallePlatillo detalle : platillo.getIngrediente()) {
+                costoTotal += calcularCostoIngrediente(detalle);
+            }
+        }
+
+        platillo.setCostoProduccion(costoTotal);
     }
 
 
@@ -196,6 +220,7 @@ public class PlatilloService {
             stockPosible = Math.min(stockPosible, stockPorIngrediente);
         }
 
+        System.out.println("Stock posible para el platillo '" + platillo.getNombre() + "': " + stockPosible);
         return Math.max(stockPosible, 0);
     }
 

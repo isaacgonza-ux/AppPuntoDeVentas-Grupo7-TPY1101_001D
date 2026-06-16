@@ -2,6 +2,7 @@ package com.sistema.puntoventas.controller.moduloProductos;
 
 import com.sistema.puntoventas.modelo.moduloProducto.Categoria;
 import com.sistema.puntoventas.service.ProductoService;
+import com.sistema.puntoventas.util.AlertaCamposVacios;
 import com.sistema.puntoventas.util.MensajesAlerta;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -30,6 +31,14 @@ public class PanelRegistrarCategoriaController {
     private Categoria categoriaEnEdicion;
 
     public void initialize() {
+
+        AlertaCamposVacios.resaltarSiVacio(txtNombre);
+        AlertaCamposVacios.configurarValidacionAutomatica(txtNombre);
+
+        
+
+
+
         if (chkActiva != null) {
             chkActiva.setSelected(true);
         }

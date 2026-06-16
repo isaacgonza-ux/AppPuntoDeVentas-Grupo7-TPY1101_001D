@@ -12,7 +12,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import com.sistema.puntoventas.modelo.moduloProducto.RankingProductosDTO;
@@ -53,7 +53,7 @@ public class PanelPrincipalEstadisticasController implements Initializable {
     private TableColumn<RankingProductosDTO, Integer> colRankingCantidad;
 
     @FXML
-    private Pane vboxVentasUsuarios;
+    private VBox vboxVentasUsuarios;
 
     @FXML
     private TableView<String> tableActividadReciente;

@@ -1,63 +1,69 @@
-/* Fondo del panel lateral (Azul suave/grisáceo) */
+/* =========================================
+   LOGIN - CAFETERÍA ELUNEY
+   ========================================= */
+
+/* Fondo del panel lateral - degradé espresso */
 .main-container {
-    -fx-background-color: #a8b7cd;
-    /* Asegura que el logo tenga espacio */
+    -fx-background-color: linear-gradient(to bottom right, #3E2723, #2C1810);
     -fx-alignment: center;
 }
 
 /* Tarjeta blanca de Login */
 .login-card {
-    -fx-background-color: white;
-    -fx-background-radius: 20; /* Bordes más redondeados para pantallas grandes */
-    /* Añadimos una sombra para que resalte sobre el fondo claro */
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 20, 0, 0, 10);
+    -fx-background-color: #FFFCF8;
+    -fx-background-radius: 24;
+    -fx-effect: dropshadow(gaussian, rgba(44,24,16,0.2), 30, 0, 0, 15);
+    -fx-border-color: #E8D5C4;
+    -fx-border-radius: 24;
+    -fx-border-width: 1;
 }
 
 /* Estilo general para campos de texto y contraseña */
 .text-field, .password-field {
-    -fx-background-color: #fcfcfc;
-    -fx-border-color: #D1D1D1;
+    -fx-background-color: #FFF5EB;
+    -fx-border-color: #E8D5C4;
     -fx-border-width: 1.5;
-    -fx-border-radius: 8;
-    -fx-background-radius: 8;
-    -fx-padding: 10 15 10 15; /* Más espacio interno para el texto */
-    -fx-font-size: 16px; /* Texto más legible en 1080p */
-    -fx-text-fill: #333333;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 10 15 10 15;
+    -fx-font-size: 16px;
+    -fx-text-fill: #3E2723;
 }
 
-/* Efecto de foco (clic) con el azul corporativo #083884 */
+/* Efecto de foco con el tono caramelo */
 .text-field:focused, .password-field:focused {
     -fx-background-color: white;
-    -fx-border-color: #083884;
+    -fx-border-color: #D4893B;
     -fx-border-width: 2;
-    -fx-effect: dropshadow(three-pass-box, rgba(8, 56, 132, 0.2), 10, 0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, rgba(212,137,59,0.25), 12, 0, 0, 0);
 }
 
-/* Estilo para el botón principal */
+/* Botón principal - espresso */
 .button {
-    -fx-background-color: #083884;
+    -fx-background-color: #3E2723;
     -fx-text-fill: white;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-background-radius: 8;
+    -fx-font-family: "Arial";
+    -fx-background-radius: 10;
     -fx-cursor: hand;
     -fx-transition: 0.3s;
+    -fx-effect: dropshadow(gaussian, rgba(62,39,35,0.25), 10, 0, 0, 3);
 }
 
-/* Efecto al pasar el mouse */
 .button:hover {
-    -fx-background-color: #062a63;
-    -fx-scale-x: 1.02; /* Pequeño efecto de aumento */
+    -fx-background-color: #2C1810;
+    -fx-scale-x: 1.02;
     -fx-scale-y: 1.02;
 }
 
-/* Efecto al presionar */
 .button:pressed {
-    -fx-background-color: #041d44;
+    -fx-background-color: #1A0E0A;
     -fx-scale-x: 0.98;
 }
 
-/* Estilo para los Labels (RUT, Contraseña) */
+/* Labels */
 .label {
-    -fx-text-fill: #444444;
+    -fx-text-fill: #5D4037;
+    -fx-font-family: "Arial";
 }

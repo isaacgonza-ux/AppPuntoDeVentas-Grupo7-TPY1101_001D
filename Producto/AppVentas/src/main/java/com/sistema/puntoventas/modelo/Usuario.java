@@ -1,5 +1,8 @@
 package com.sistema.puntoventas.modelo;
 
+import lombok.Builder;
+
+@Builder
 public class Usuario {
 private int id;
 private String nombre;

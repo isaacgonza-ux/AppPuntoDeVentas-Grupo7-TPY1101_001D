@@ -16,19 +16,19 @@
         <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
             <center>
-                <ScrollPane fitToWidth="true" style="-fx-background-color: #f8fafc; -fx-border-color: transparent;">
+                <ScrollPane fitToWidth="true" style="-fx-background-color: #FFF5EB; -fx-border-color: transparent;">
                     <content>
-                        <StackPane fx:id="contentArea" style="-fx-background-color: #f8fafc;">
+                        <StackPane fx:id="contentArea" style="-fx-background-color: #FFF5EB;">
                             <VBox spacing="25.0" style="-fx-padding: 40;">
 
                                 <VBox spacing="5.0">
-                                    <Label style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #1e293b;" text="Dashboard" />
-                                    <Label style="-fx-font-size: 16px; -fx-text-fill: #64748b;" text="Resumen general de las actividades del sistema" />
+                                    <Label style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #3E2723;" text="Dashboard" />
+                                    <Label style="-fx-font-size: 16px; -fx-text-fill: #8D6E63;" text="Resumen general de las actividades del sistema" />
                                 </VBox>
 
                                 <HBox spacing="25.0">
-                                    <VBox prefHeight="140.0" style="-fx-background-color: #2563eb; -fx-background-radius: 15; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(37,99,235,0.25), 15, 0, 0, 5);" HBox.hgrow="ALWAYS">
-                                        <HBox alignment="CENTER_LEFT" spacing="20.0">
+                                    <VBox prefHeight="140.0" styleClass="card-kpi-coffee" HBox.hgrow="ALWAYS">
+                                        <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-padding: 25;">
                                             <Label style="-fx-text-fill: white; -fx-font-size: 40px;" text="🛒" />
                                             <VBox>
                                                 <Label style="-fx-text-fill: white; -fx-font-size: 16px; -fx-opacity: 0.9;" text="Ventas" />
@@ -37,8 +37,8 @@
                                         </HBox>
                                     </VBox>
 
-                                    <VBox prefHeight="140.0" style="-fx-background-color: #16a34a; -fx-background-radius: 15; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(22,163,74,0.25), 15, 0, 0, 5);" HBox.hgrow="ALWAYS">
-                                        <HBox alignment="CENTER_LEFT" spacing="20.0">
+                                    <VBox prefHeight="140.0" styleClass="card-kpi-caramel" HBox.hgrow="ALWAYS">
+                                        <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-padding: 25;">
                                             <Label style="-fx-text-fill: white; -fx-font-size: 40px;" text="📦" />
                                             <VBox>
                                                 <Label style="-fx-text-fill: white; -fx-font-size: 16px; -fx-opacity: 0.9;" text="Productos" />
@@ -47,8 +47,8 @@
                                         </HBox>
                                     </VBox>
 
-                                    <VBox prefHeight="140.0" style="-fx-background-color: #eab308; -fx-background-radius: 15; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(234,179,8,0.25), 15, 0, 0, 5);" HBox.hgrow="ALWAYS">
-                                        <HBox alignment="CENTER_LEFT" spacing="20.0">
+                                    <VBox prefHeight="140.0" styleClass="card-kpi-latte" HBox.hgrow="ALWAYS">
+                                        <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-padding: 25;">
                                             <Label style="-fx-text-fill: white; -fx-font-size: 40px;" text="👥" />
                                             <VBox>
                                                 <Label style="-fx-text-fill: white; -fx-font-size: 16px; -fx-opacity: 0.9;" text="Usuarios" />
@@ -66,45 +66,45 @@
                                         <ColumnConstraints hgrow="ALWAYS" percentWidth="25.0" />
                                     </columnConstraints>
                                     <children>
-                                        <VBox onMouseClicked="#abrirModuloDashboard" alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.06), 12, 0, 0, 4); -fx-padding: 30; -fx-cursor: hand;" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                                            <Label style="-fx-font-size: 40px; -fx-text-fill: #3b82f6;" text="⏱️" />
-                                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #334155;" text="Dashboard" />
-                                            <Label alignment="CENTER" style="-fx-text-fill: #64748b; -fx-font-size: 13px;" text="Resumen de métricas y estadísticas." textAlignment="CENTER" wrapText="true" />
+                                        <VBox onMouseClicked="#abrirModuloDashboard" alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(44,24,16,0.06), 12, 0, 0, 4); -fx-padding: 30; -fx-cursor: hand;" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                            <Label style="-fx-font-size: 40px; -fx-text-fill: #D4893B;" text="⏱️" />
+                                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #3E2723;" text="Dashboard" />
+                                            <Label alignment="CENTER" style="-fx-text-fill: #8D6E63; -fx-font-size: 13px;" text="Resumen de métricas y estadísticas." textAlignment="CENTER" wrapText="true" />
                                         </VBox>
-                                        <VBox onMouseClicked="#abrirModuloOrdenes" alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.06), 12, 0, 0, 4); -fx-padding: 30; -fx-cursor: hand;" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                                            <Label style="-fx-font-size: 40px; -fx-text-fill: #3b82f6;" text="🛒" />
-                                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #334155;" text="Órdenes" />
-                                            <Label alignment="CENTER" style="-fx-text-fill: #64748b; -fx-font-size: 13px;" text="Gestión de ventas y pedidos." textAlignment="CENTER" wrapText="true" />
+                                        <VBox onMouseClicked="#abrirModuloOrdenes" alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(44,24,16,0.06), 12, 0, 0, 4); -fx-padding: 30; -fx-cursor: hand;" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                            <Label style="-fx-font-size: 40px; -fx-text-fill: #D4893B;" text="🛒" />
+                                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #3E2723;" text="Órdenes" />
+                                            <Label alignment="CENTER" style="-fx-text-fill: #8D6E63; -fx-font-size: 13px;" text="Gestión de ventas y pedidos." textAlignment="CENTER" wrapText="true" />
                                         </VBox>
-                                        <VBox onMouseClicked="#abrirModuloProductos" alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.06), 12, 0, 0, 4); -fx-padding: 30; -fx-cursor: hand;" GridPane.columnIndex="2" GridPane.rowIndex="0">
-                                            <Label style="-fx-font-size: 40px; -fx-text-fill: #3b82f6;" text="📦" />
-                                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #334155;" text="Productos" />
-                                            <Label alignment="CENTER" style="-fx-text-fill: #64748b; -fx-font-size: 13px;" text="Control total de inventario." textAlignment="CENTER" wrapText="true" />
+                                        <VBox onMouseClicked="#abrirModuloProductos" alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(44,24,16,0.06), 12, 0, 0, 4); -fx-padding: 30; -fx-cursor: hand;" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                                            <Label style="-fx-font-size: 40px; -fx-text-fill: #D4893B;" text="📦" />
+                                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #3E2723;" text="Productos" />
+                                            <Label alignment="CENTER" style="-fx-text-fill: #8D6E63; -fx-font-size: 13px;" text="Control total de inventario." textAlignment="CENTER" wrapText="true" />
                                         </VBox>
-                                        <VBox onMouseClicked="#abrirModuloCategorias" alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.06), 12, 0, 0, 4); -fx-padding: 30; -fx-cursor: hand;" GridPane.columnIndex="3" GridPane.rowIndex="0">
-                                            <Label style="-fx-font-size: 40px; -fx-text-fill: #3b82f6;" text="🏷️" />
-                                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #334155;" text="Categorías" />
-                                            <Label alignment="CENTER" style="-fx-text-fill: #64748b; -fx-font-size: 13px;" text="Organización por rubros." textAlignment="CENTER" wrapText="true" />
+                                        <VBox onMouseClicked="#abrirModuloCategorias" alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(44,24,16,0.06), 12, 0, 0, 4); -fx-padding: 30; -fx-cursor: hand;" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                                            <Label style="-fx-font-size: 40px; -fx-text-fill: #D4893B;" text="🏷️" />
+                                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #3E2723;" text="Categorías" />
+                                            <Label alignment="CENTER" style="-fx-text-fill: #8D6E63; -fx-font-size: 13px;" text="Organización por rubros." textAlignment="CENTER" wrapText="true" />
                                         </VBox>
-                                        <VBox onMouseClicked="#abrirModuloUsuarios" alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.06), 12, 0, 0, 4); -fx-padding: 30; -fx-cursor: hand;" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                                            <Label style="-fx-font-size: 40px; -fx-text-fill: #3b82f6;" text="👥" />
-                                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #334155;" text="Usuarios" />
-                                            <Label alignment="CENTER" style="-fx-text-fill: #64748b; -fx-font-size: 13px;" text="Administración de cuentas." textAlignment="CENTER" wrapText="true" />
+                                        <VBox onMouseClicked="#abrirModuloUsuarios" alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(44,24,16,0.06), 12, 0, 0, 4); -fx-padding: 30; -fx-cursor: hand;" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                            <Label style="-fx-font-size: 40px; -fx-text-fill: #D4893B;" text="👥" />
+                                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #3E2723;" text="Usuarios" />
+                                            <Label alignment="CENTER" style="-fx-text-fill: #8D6E63; -fx-font-size: 13px;" text="Administración de cuentas." textAlignment="CENTER" wrapText="true" />
                                         </VBox>
-                                        <VBox onMouseClicked="#abrirModuloReportes" alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.06), 12, 0, 0, 4); -fx-padding: 30; -fx-cursor: hand;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                            <Label style="-fx-font-size: 40px; -fx-text-fill: #3b82f6;" text="📊" />
-                                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #334155;" text="Reportes" />
-                                            <Label alignment="CENTER" style="-fx-text-fill: #64748b; -fx-font-size: 13px;" text="Informes financieros detallados." textAlignment="CENTER" wrapText="true" />
+                                        <VBox onMouseClicked="#abrirModuloReportes" alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(44,24,16,0.06), 12, 0, 0, 4); -fx-padding: 30; -fx-cursor: hand;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <Label style="-fx-font-size: 40px; -fx-text-fill: #D4893B;" text="📊" />
+                                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #3E2723;" text="Reportes" />
+                                            <Label alignment="CENTER" style="-fx-text-fill: #8D6E63; -fx-font-size: 13px;" text="Informes financieros detallados." textAlignment="CENTER" wrapText="true" />
                                         </VBox>
-                                        <VBox onMouseClicked="#abrirModuloPerfil" alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.06), 12, 0, 0, 4); -fx-padding: 30; -fx-cursor: hand;" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                            <Label style="-fx-font-size: 40px; -fx-text-fill: #3b82f6;" text="👤" />
-                                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #334155;" text="Perfil" />
-                                            <Label alignment="CENTER" style="-fx-text-fill: #64748b; -fx-font-size: 13px;" text="Ajustes de datos personales." textAlignment="CENTER" wrapText="true" />
+                                        <VBox onMouseClicked="#abrirModuloPerfil" alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(44,24,16,0.06), 12, 0, 0, 4); -fx-padding: 30; -fx-cursor: hand;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                            <Label style="-fx-font-size: 40px; -fx-text-fill: #D4893B;" text="👤" />
+                                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #3E2723;" text="Perfil" />
+                                            <Label alignment="CENTER" style="-fx-text-fill: #8D6E63; -fx-font-size: 13px;" text="Ajustes de datos personales." textAlignment="CENTER" wrapText="true" />
                                         </VBox>
-                                        <VBox onMouseClicked="#abrirModuloTienda" alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.06), 12, 0, 0, 4); -fx-padding: 30; -fx-cursor: hand;" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                                            <Label style="-fx-font-size: 40px; -fx-text-fill: #3b82f6;" text="🏪" />
-                                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #334155;" text="Tienda" />
-                                            <Label alignment="CENTER" style="-fx-text-fill: #64748b; -fx-font-size: 13px;" text="Vista pública de la tienda." textAlignment="CENTER" wrapText="true" />
+                                        <VBox onMouseClicked="#abrirModuloTienda" alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(44,24,16,0.06), 12, 0, 0, 4); -fx-padding: 30; -fx-cursor: hand;" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                            <Label style="-fx-font-size: 40px; -fx-text-fill: #D4893B;" text="🏪" />
+                                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #3E2723;" text="Tienda" />
+                                            <Label alignment="CENTER" style="-fx-text-fill: #8D6E63; -fx-font-size: 13px;" text="Vista pública de la tienda." textAlignment="CENTER" wrapText="true" />
                                         </VBox>
                                     </children>
                                     <rowConstraints>

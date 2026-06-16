@@ -11,4 +11,5 @@ public interface ICategoriaRepository {
     boolean actualizarCategoria(Categoria categoria);
     boolean eliminarCategoria(int id);
     List<Categoria> obtenerCategorias();
+    boolean tieneProductosAsociados(int id);
 }

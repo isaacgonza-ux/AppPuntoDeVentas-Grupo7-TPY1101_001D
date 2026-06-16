@@ -128,15 +128,8 @@ public class PanelPrincipalPlatillosController {
 
         colPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
         colCostoProduccion.setCellValueFactory(new PropertyValueFactory<>("costoProduccion"));
-        colStockActual.setCellValueFactory(cellData -> {
-            try {
-                int stockCalculado = platilloService.calcularStockDisponibleTiempoReal(cellData.getValue());
-                return new javafx.beans.property.SimpleIntegerProperty(stockCalculado).asObject();
-            } catch (Exception e) {
-                System.err.println("Error al calcular stock en tiempo real: " + e.getMessage());
-                return new javafx.beans.property.SimpleIntegerProperty(0).asObject();
-            }
-        });
+        colStockActual.setCellValueFactory(new PropertyValueFactory<>("stockActual"));
+        colStockActual.setText("fabricables");
 
         colEstado.setCellValueFactory(cellData -> {
             boolean estado = cellData.getValue().isEstado();
@@ -169,10 +162,21 @@ public class PanelPrincipalPlatillosController {
     private void cargarPlatillos() {
         try {
 
-            List<Platillo> platillos = platilloService.obtenerPlatillos();
+            List<Platillo> platillos = platilloService.obtenerPlatillosConRecetaCompleta();
+
+            for (Platillo p : platillos) {
+                try {
+                    int fabricables = platilloService.calcularStockDisponibleTiempoReal(p);
+                    p.setStockActual(fabricables);
+                } catch (Exception e) {
+                    // Si un platillo tiene ingredientes mal configurados, le dejamos 0 por seguridad
+                    p.setStockActual(0);
+                    System.err.println("No se pudo calcular el stock del platillo " + p.getNombre() + ": " + e.getMessage());
+                }
+            }
             listaPlatillos = FXCollections.observableArrayList(platillos);
             tablePlatillos.setItems(listaPlatillos);
-            MensajesAlerta.mostrarMensaje("Éxito", "Platillos cargados correctamente", Alert.AlertType.INFORMATION);
+            //MensajesAlerta.mostrarMensaje("Éxito", "Platillos cargados correctamente", Alert.AlertType.INFORMATION);
         } catch (Exception e) {
             System.err.println("Error al cargar platillos: " + e.getMessage());
             MensajesAlerta.mostrarMensaje("Error", "No se pudieron cargar los platillos", Alert.AlertType.ERROR);

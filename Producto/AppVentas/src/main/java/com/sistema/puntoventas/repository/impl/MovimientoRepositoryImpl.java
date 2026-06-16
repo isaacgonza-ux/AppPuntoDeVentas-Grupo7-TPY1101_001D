@@ -15,24 +15,38 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import com.sistema.puntoventas.repository.moduloProductos.IProductoRepository;
+import com.sistema.puntoventas.modelo.moduloProducto.Producto;
 
 public class MovimientoRepositoryImpl implements IMovimientoRepository {
 
     // Misma URL de conexión que tienes en tu DbManager
     private final String url = "jdbc:sqlite:DBventasInventario.db";
+    private IProductoRepository productoRepo;
 
     @Override
     public boolean registrarMovimiento(MovimientoInventario movimiento) {
-        String sql = "INSERT INTO historial_inventario (idProducto, tipoMovimiento, cantidad, motivo, idUsuario) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO historial_inventario (idProducto, nombreProducto, tipoMovimiento, cantidad, motivo, idUsuario, fecha) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, movimiento.getIdProducto());
-            pstmt.setString(2, movimiento.getTipoMovimiento().name()); // Guardamos el Enum como texto
-            pstmt.setInt(3, movimiento.getCantidad());
-            pstmt.setString(4, movimiento.getMotivo());
-            pstmt.setInt(5, movimiento.getIdUsuario());
+            if (movimiento.getNombreProducto() != null) {
+                pstmt.setString(2, movimiento.getNombreProducto());
+            } else {
+                pstmt.setNull(2, java.sql.Types.VARCHAR);
+            }
+            pstmt.setString(3, movimiento.getTipoMovimiento().name());
+            pstmt.setInt(4, movimiento.getCantidad());
+            pstmt.setString(5, movimiento.getMotivo());
+            pstmt.setInt(6, movimiento.getIdUsuario());
+            if (movimiento.getFecha() != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                pstmt.setString(7, movimiento.getFecha().format(formatter));
+            } else {
+                pstmt.setNull(7, java.sql.Types.VARCHAR);
+            }
 
             int filasAfectadas = pstmt.executeUpdate();
             return filasAfectadas > 0;
@@ -155,15 +169,29 @@ public class MovimientoRepositoryImpl implements IMovimientoRepository {
         return lista;
     }
 
+    // Inicializar el repositorio de productos para obtener nombres
+    public void setProductoRepo(IProductoRepository productoRepo) {
+        this.productoRepo = productoRepo;
+    }
+
     // Método auxiliar para evitar repetir código al leer los datos de la base de datos
     private MovimientoInventario mapearMovimiento(ResultSet rs) throws SQLException {
         MovimientoInventario mov = new MovimientoInventario();
         mov.setIdMovimiento(rs.getInt("idMovimiento"));
         mov.setIdProducto(rs.getInt("idProducto"));
+        mov.setNombreProducto(rs.getString("nombreProducto"));
         mov.setTipoMovimiento(TipoMovimiento.valueOf(rs.getString("tipoMovimiento")));
         mov.setCantidad(rs.getInt("cantidad"));
         mov.setMotivo(rs.getString("motivo"));
         mov.setIdUsuario(rs.getInt("idUsuario"));
+
+        // Fallback: si no hay nombre guardado, obtenerlo del repositorio
+        if (mov.getNombreProducto() == null && productoRepo != null) {
+            Producto producto = productoRepo.obtenerProductoPorId(mov.getIdProducto());
+            if (producto != null) {
+                mov.setNombreProducto(producto.getNombre());
+            }
+        }
 
         // 2. EL BLOQUE QUE FALTA PARA LEER Y CONVERTIR LA FECHA A LOCALDATETIME
         String fechaTexto = rs.getString("fecha");
