@@ -1,0 +1,187 @@
+/* Contenedor principal: ocupa todo el ancho y alto de la pantalla */
+.slider {
+  position: relative;
+  width: 100%;
+  height: 93vh;
+  overflow: hidden;
+}
+
+/* Imagen de fondo**/
+.slider__imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.6s ease;
+}
+
+/* Capa oscura semitransparente encima de la imagen */
+.slider__overlay {
+  position: absolute;
+  inset: 0; 
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Bloque de texto, pegado a la izquierda */
+.slider__contenido {
+  position: absolute;
+  top: 50%;
+  left: 8%;
+  transform: translateY(-50%);
+  color: white;
+  max-width: 500px;
+}
+
+.slider__titulo {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  line-height: 1.2;
+  font-family: 'Inter', sans-serif;
+}
+
+.slider__subtitulo {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Botones izquierda y derecha */
+.slider__btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  padding: 12px 18px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.slider__btn:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.slider__btn--izq {
+  left: 1.5rem;
+}
+
+.slider__btn--der {
+  right: 1.5rem;
+}
+
+/* Puntos indicadores */
+.slider__puntos {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.slider__punto {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.slider__punto--activo {
+  background-color: #d4a574;
+}
+
+
+/*Estilos para el botón CTA dentro del slider */
+.slider_cta {
+  margin-top: 1.5rem;
+  margin-left: 5rem;
+  padding: 12px 28px;
+  background-color: #3d2416;
+  color: #ffffff;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.slider_cta:hover {
+  background-color: #d4a574;
+  border-color: #d4a574;
+  transform: scale(1.05);
+}
+
+/*responsive*/
+
+/* Tablet */
+@media (max-width: 768px) {
+  .slider {
+    height: 70vh;
+  }
+
+  .slider__titulo {
+    font-size: 2rem;
+  }
+
+  .slider__subtitulo {
+    font-size: 0.95rem;
+  }
+
+  .slider__contenido {
+    left: 5%;
+    max-width: 80%;
+  }
+
+  .slider_cta {
+    margin-left: 0;
+    padding: 10px 22px;
+    font-size: 0.9rem;
+  }
+
+  .slider__btn {
+    padding: 8px 13px;
+    font-size: 1.2rem;
+  }
+}
+
+/* Móvil */
+@media (max-width: 480px) {
+  .slider {
+    height: 95vh;
+  }
+
+  .slider__titulo {
+    font-size: 1.5rem;
+  }
+
+  .slider__subtitulo {
+    font-size: 0.85rem;
+  }
+
+  .slider__contenido {
+    left: 4%;
+    max-width: 90%;
+  }
+
+  .slider_cta {
+    margin-left: 0;
+    padding: 8px 18px;
+    font-size: 0.85rem;
+  }
+
+  /* Ocultamos botones para cambiar imagen */
+  .slider__btn {
+    display: none;
+  }
+
+  .slider__puntos {
+    bottom: 1rem;
+  }
+}

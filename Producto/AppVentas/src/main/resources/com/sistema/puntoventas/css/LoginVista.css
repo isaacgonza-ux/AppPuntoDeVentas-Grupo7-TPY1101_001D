@@ -1,0 +1,63 @@
+/* Fondo del panel lateral (Azul suave/grisáceo) */
+.main-container {
+    -fx-background-color: #a8b7cd;
+    /* Asegura que el logo tenga espacio */
+    -fx-alignment: center;
+}
+
+/* Tarjeta blanca de Login */
+.login-card {
+    -fx-background-color: white;
+    -fx-background-radius: 20; /* Bordes más redondeados para pantallas grandes */
+    /* Añadimos una sombra para que resalte sobre el fondo claro */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 20, 0, 0, 10);
+}
+
+/* Estilo general para campos de texto y contraseña */
+.text-field, .password-field {
+    -fx-background-color: #fcfcfc;
+    -fx-border-color: #D1D1D1;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 15 10 15; /* Más espacio interno para el texto */
+    -fx-font-size: 16px; /* Texto más legible en 1080p */
+    -fx-text-fill: #333333;
+}
+
+/* Efecto de foco (clic) con el azul corporativo #083884 */
+.text-field:focused, .password-field:focused {
+    -fx-background-color: white;
+    -fx-border-color: #083884;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(three-pass-box, rgba(8, 56, 132, 0.2), 10, 0, 0, 0);
+}
+
+/* Estilo para el botón principal */
+.button {
+    -fx-background-color: #083884;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-transition: 0.3s;
+}
+
+/* Efecto al pasar el mouse */
+.button:hover {
+    -fx-background-color: #062a63;
+    -fx-scale-x: 1.02; /* Pequeño efecto de aumento */
+    -fx-scale-y: 1.02;
+}
+
+/* Efecto al presionar */
+.button:pressed {
+    -fx-background-color: #041d44;
+    -fx-scale-x: 0.98;
+}
+
+/* Estilo para los Labels (RUT, Contraseña) */
+.label {
+    -fx-text-fill: #444444;
+}

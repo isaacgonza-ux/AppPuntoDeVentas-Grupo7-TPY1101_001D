@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="1920.0" prefWidth="1080.0" styleClass="panel-root" stylesheets="@css/panel-productos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sistema.puntoventas.controller.PanelAgregarUsuarioController">
+    <children>
+        <Label layoutX="329.0" layoutY="69.0" styleClass="field-label" text="Nombre" />
+        <Label layoutX="339.0" layoutY="224.0" styleClass="field-label" text="Rut" />
+        <Label layoutX="320.0" layoutY="299.0" styleClass="field-label" text="Contraseña" />
+        <Label layoutX="328.0" layoutY="382.0" styleClass="field-label" text="Telefono" />
+        <Label layoutX="343.0" layoutY="484.0" styleClass="field-label" text="Rol" />
+        <TextField fx:id="txtNombre" layoutX="75.0" layoutY="59.0" promptText="Nombre" styleClass="field" />
+        <TextField fx:id="txtRut" layoutX="75.0" layoutY="214.0" promptText="Rut" styleClass="field" />
+        <TextField fx:id="txtContraseña" layoutX="75.0" layoutY="298.0" promptText="Contraseña" styleClass="field" />
+        <ComboBox fx:id="cmbRol" layoutX="51.0" layoutY="479.0" prefWidth="220.0" promptText="Rol" styleClass="field" />
+        <Label fx:id="lblEstado" layoutX="316.0" layoutY="645.0" prefHeight="38.0" prefWidth="401.0" styleClass="status" text="Listo para registrar" />
+        <Button fx:id="btnRegistrar" layoutX="316.0" layoutY="585.0" mnemonicParsing="false" onAction="#registrarUsuario" styleClass="btn-primary" text="Registrar" />
+        <Label layoutX="327.0" layoutY="145.0" prefHeight="18.0" prefWidth="119.0" text="Apellido" />
+      <TextField fx:id="txtApellido" layoutX="75.0" layoutY="134.0" promptText="Apellido" styleClass="field" />
+      <TextField fx:id="txtTelefono" layoutX="75.0" layoutY="381.0" promptText="Telefono " styleClass="field" />
+    </children>
+</AnchorPane>
