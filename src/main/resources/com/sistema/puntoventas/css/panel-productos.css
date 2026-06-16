@@ -1,0 +1,195 @@
+.panel-root {
+    -fx-background-color: linear-gradient(to bottom right, #FFF5EB, #FFFCF8);
+}
+
+.label {
+    -fx-text-fill: #5D4037;
+}
+
+.card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 18;
+    -fx-border-color: #E8D5C4;
+    -fx-border-radius: 18;
+    -fx-effect: dropshadow(gaussian, rgba(44, 24, 16, 0.10), 26, 0.2, 0, 8);
+}
+
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #3E2723;
+    -fx-font-family: "Arial";
+}
+
+.subtitle {
+    -fx-font-size: 12px;
+    -fx-text-fill: #8D6E63;
+    -fx-font-family: "Arial";
+}
+
+.field-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #5D4037;
+    -fx-font-family: "Arial";
+}
+
+.field {
+    -fx-background-color: #FFFCF8;
+    -fx-border-color: #E8D5C4;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 9 12;
+    -fx-font-size: 13px;
+    -fx-text-fill: #3E2723;
+}
+
+.field:focused {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #D4893B;
+    -fx-effect: dropshadow(gaussian, rgba(212, 137, 59, 0.18), 10, 0.2, 0, 1);
+}
+
+.status {
+    -fx-background-color: #FFF5EB;
+    -fx-text-fill: #5D4037;
+    -fx-padding: 10 12;
+    -fx-background-radius: 10;
+    -fx-font-size: 12px;
+}
+
+.btn-primary {
+    -fx-background-color: linear-gradient(to right, #3E2723, #5D4037);
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-padding: 10 18;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+    -fx-font-family: "Arial";
+}
+
+.btn-primary:hover {
+    -fx-background-color: linear-gradient(to right, #2C1810, #4E342E);
+}
+
+.btn-primary:pressed {
+    -fx-background-color: #1A0E0A;
+}
+
+.summary-bar {
+    -fx-background-color: transparent;
+    -fx-padding: 6 0 0 0;
+}
+
+.summary-card {
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #FFFCF8);
+    -fx-background-radius: 18;
+    -fx-border-color: #E8D5C4;
+    -fx-border-radius: 18;
+    -fx-padding: 12 10;
+    -fx-effect: dropshadow(gaussian, rgba(44, 24, 16, 0.08), 18, 0.18, 0, 6);
+}
+
+.summary-icon {
+    -fx-font-size: 22px;
+    -fx-padding: 2 0 4 0;
+}
+
+.summary-title {
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #5D4037;
+    -fx-padding: 2 0 2 0;
+    -fx-font-family: "Arial";
+}
+
+.summary-value {
+    -fx-font-size: 22px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #3E2723;
+    -fx-font-family: "Arial";
+}
+
+.label-metrica{
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5D4037;
+    -fx-font-family: "Arial";
+}
+
+/* --- Estilos para la Tabla --- */
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #E8D5C4;
+    -fx-border-radius: 12;
+    -fx-border-width: 1px;
+    -fx-background-radius: 12;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #FFF5EB;
+    -fx-background-radius: 12 12 0 0;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: #E8D5C4;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+    -fx-size: 40px;
+    -fx-border-width: 0 1px 0 0;
+    -fx-border-color: #E8D5C4;
+    -fx-padding: 0 10;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #5D4037;
+    -fx-alignment: center-left;
+    -fx-padding: 0;
+    -fx-font-family: "Arial";
+}
+
+.table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: #F5EDE6;
+    -fx-text-background-color: #3E2723;
+    -fx-cell-size: 45px;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #FFFCF8;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #FFF5EB;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #F5EDE6;
+    -fx-text-background-color: #3E2723;
+}
+
+.table-cell {
+    -fx-font-size: 13px;
+    -fx-alignment: center-left;
+    -fx-padding: 0 10;
+    -fx-font-family: "Arial";
+}
+
+.table-view .scroll-bar:horizontal,
+.table-view .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.table-view .scroll-bar .thumb {
+    -fx-background-color: #D7CCC8;
+    -fx-background-radius: 5;
+}
+
+.table-view .scroll-bar .thumb:hover {
+    -fx-background-color: #BCAAA4;
+}

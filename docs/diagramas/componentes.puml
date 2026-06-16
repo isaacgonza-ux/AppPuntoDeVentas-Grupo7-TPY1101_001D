@@ -1,0 +1,76 @@
+@startuml arquitectura_componentes
+
+title Arquitectura de Componentes: Módulo IA Predicción
+
+package "INTERFAZ DE USUARIO" #FFE4E1 {
+    [Dashboard UI] as Dashboard
+    [Tabla Predicciones] as TablaPred
+}
+
+package "CAPA DE NEGOCIO (Java)" #E1FFE1 {
+    [EstadisticaService] as Service
+    note right of Service: Orquestra predicciones\nValida datos\nCrea objetos
+}
+
+package "CAPA DE DATOS (Java)" #E1E1FF {
+    [EstadisticasRepository] as ERepo
+    [ProductoRepository] as PRepo
+    note bottom of ERepo: Export a CSV\nQuery agregadas
+    note bottom of PRepo: Stock actual\nDetalles producto
+}
+
+package "PERSISTENCIA" #FFE4FF {
+    database "SQLite\n(DBventasInventario.db)" as BD
+}
+
+package "ANÁLISIS IA (Python)" #FFFFE1 {
+    [prediccion_stock.py] as PredStockPy
+    [modelo_predictivo.py] as ProphetPy
+    note right of PredStockPy: Lee CSV\nProphet\nDemanda promedio
+    note right of ProphetPy: Predicción ventas
+}
+
+package "ALMACENAMIENTO TEMPORAL" #FFFACD {
+    file "datos_stock.csv" as StockCSV
+    file "datos_ventas.csv" as VentasCSV
+}
+
+package "MODELOS (Java)" #F0E68C {
+    [PrediccionStock] as PrediccionModel
+    note right of PrediccionModel: idProducto\ndiasParaAgotarse\ncantidadSugerida\nindiceRiesgo
+}
+
+' Conexiones
+Dashboard -down-> Service: ejecutarPrediccionStock()
+TablaPred -down-> Service: obtenerResultados()
+
+Service -down-> ERepo: prepararDatosStockParaIA()
+Service -down-> PRepo: obtenerStockActual()
+
+ERepo -down-> BD: SELECT queries
+PRepo -down-> BD: SELECT stock
+
+ERepo -right-> StockCSV: export
+PRepo -right-> StockCSV: lee datos
+
+Service -down-> PredStockPy: ProcessBuilder\n"python prediccion_stock.py"
+
+PredStockPy -left-> StockCSV: lee
+PredStockPy --> Service: output STDOUT
+
+Service -down-> PrediccionModel: crear objetos
+
+Dashboard <-down- PrediccionModel: mostrar
+
+legend right
+  |<#FFE4E1> UI |
+  |<#E1FFE1> Java Service |
+  |<#E1E1FF> Java Repository |
+  |<#FFE4FF> SQLite |
+  |<#FFFFE1> Python IA |
+  |<#FFFACD> CSV |
+  |<#F0E68C> Modelos |
+end legend
+
+@enduml
+

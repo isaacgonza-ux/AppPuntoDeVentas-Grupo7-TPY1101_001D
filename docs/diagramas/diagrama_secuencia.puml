@@ -1,0 +1,62 @@
+@startuml diagrama_secuencia_prediccion
+
+title Diagrama de Secuencia: Predicción de Stock
+
+actor Usuario
+participant "UI" as UI
+participant "EstadisticaService" as Service
+participant "Repository" as Repo
+participant "Python" as Py
+
+Usuario ->> UI: Clic en botón Predicción
+UI ->> Service: ejecutarPrediccionStock()
+
+activate Service #FFE4E1
+
+Service ->> Service: prepararDatosStockParaIA()
+note right of Service: Valida mínimo 7 días
+
+Service ->> Repo: prepararDatosStockParaIA()
+activate Repo #E1FFE1
+    Repo ->> Repo: Exportar a CSV
+    Repo ->> Repo: Verificar registros >= 7
+    Repo -->> Service: filasExportadas = 15
+deactivate Repo
+
+alt ERROR: Datos insuficientes
+    Service -->> UI: return empty List
+    UI ->> UI: Mostrar error
+else OK: Datos suficientes
+
+    Service ->> Py: ProcessBuilder.start()
+    activate Py #E1E1FF
+        Py ->> Py: Leer datos_stock.csv
+        Py ->> Py: Prophet.fit()
+        Py ->> Py: make_future_dataframe(7)
+        Py ->> Py: Calcular demanda promedio
+        Py -->> Service: "1,4.5\n2,8.2\n3,2.1"
+    deactivate Py
+
+    Service ->> Service: Parsear líneas
+
+    loop Para cada producto
+        Service ->> Repo: obtenerStockActual(id)
+        activate Repo #E1FFE1
+            Repo -->> Service: stock = 150
+        deactivate Repo
+
+        Service ->> Service: Calcular PrediccionStock
+        note right of Service: dias = stock/demanda
+
+        Service ->> Service: Agregar a List
+    end
+
+    Service -->> UI: List<PrediccionStock>
+    UI ->> UI: Mostrar tabla
+    UI -->> Usuario: Predicciones visibles
+end
+
+deactivate Service
+
+@enduml
+

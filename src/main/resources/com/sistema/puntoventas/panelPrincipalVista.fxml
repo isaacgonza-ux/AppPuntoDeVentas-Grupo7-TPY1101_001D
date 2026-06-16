@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" stylesheets="@css/PanelPrincipalVista.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sistema.puntoventas.controller.PanelPrincipalVistaController">
+    <children>
+        <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+            <left>
+                <VBox prefWidth="260.0" spacing="10.0" styleClass="sidebar" BorderPane.alignment="CENTER">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="30.0" />
+                    </padding>
+                    <children>
+                  <ImageView fitHeight="111.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@../../../Img/logo-eluney2small.png" />
+                     </image>
+                  </ImageView>
+
+                        <VBox spacing="5.0">
+                            <children>
+                                <Button fx:id="btnDashboard" maxWidth="Infinity" styleClass="menu-button" text="Inicio">
+                                    <graphic>
+                                        <Label style="-fx-background-color: #D4893B;" styleClass="icon-circle" text="🏠" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnUsuarios" maxWidth="Infinity" styleClass="menu-button" text="Usuarios">
+                                    <graphic>
+                                        <Label style="-fx-background-color: #5D4037;" styleClass="icon-circle" text="U" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnProductos" maxWidth="Infinity" onMouseClicked="#handleNavegacion" styleClass="menu-button" text="Productos">
+                                    <graphic>
+                                        <Label style="-fx-background-color: #4A7C59;" styleClass="icon-circle" text="P" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnPlatillos" maxWidth="Infinity" onMouseClicked="#handleNavegacion" styleClass="menu-button" text="Platillos">
+                                    <graphic>
+                                        <Label style="-fx-background-color: #BF6B3F;" styleClass="icon-circle" text="PL" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnCategorias" maxWidth="Infinity" onMouseClicked="#handleNavegacion" styleClass="menu-button" text="Categorías">
+                                    <graphic>
+                                        <Label style="-fx-background-color: #D4A373;" styleClass="icon-circle" text="C" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnVentas" maxWidth="Infinity" onMouseClicked="#handleNavegacion" styleClass="menu-button" text="Ventas">
+                                    <graphic>
+                                        <Label style="-fx-background-color: #9C522E;" styleClass="icon-circle" text="V" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnInventario" maxWidth="Infinity" onMouseClicked="#handleNavegacion" styleClass="menu-button" text="Inventario">
+                                    <graphic>
+                                        <Label style="-fx-background-color: #7D8A76;" styleClass="icon-circle" text="I" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnEstadisticas" maxWidth="Infinity" onMouseClicked="#handleNavegacion" styleClass="menu-button" text="Estadísticas">
+                                    <graphic>
+                                        <Label style="-fx-background-color: #B58B6A;" styleClass="icon-circle" text="E" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnIASql" maxWidth="Infinity" styleClass="menu-button" text="IA SQL">
+                                    <graphic>
+                                        <Label style="-fx-background-color: #5D4037;" styleClass="icon-circle" text="AI" />
+                                    </graphic>
+                                </Button>
+                            </children>
+                        </VBox>
+
+                        <Region VBox.vgrow="ALWAYS" />
+
+                        <Button fx:id="btnCerrarSesion" maxWidth="Infinity" styleClass="menu-button" text="Cerrar Sesión">
+                            <graphic>
+                                <Label style="-fx-background-color: #922B21;" styleClass="icon-circle" text="↩" />
+                            </graphic>
+                        </Button>
+
+                        <Button maxWidth="Infinity" styleClass="menu-button" text="Configuración">
+                            <graphic>
+                                <Label style="-fx-background-color: #B87333;" styleClass="icon-circle" text="C" />
+                            </graphic>
+                        </Button>
+                    </children>
+                </VBox>
+            </left>
+
+            <center>
+                <StackPane fx:id="contentArea" style="-fx-background-color: #FFF5EB;" />
+            </center>
+
+        </BorderPane>
+    </children>
+</AnchorPane>
