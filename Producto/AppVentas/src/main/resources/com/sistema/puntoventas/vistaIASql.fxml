@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableView?>
@@ -35,16 +36,21 @@
 
                    <HBox spacing="10.0">
                       <children>
-                         <TextField fx:id="txtPrompt" promptText="Escribe tu consulta en lenguaje natural..." HBox.hgrow="ALWAYS">
-                            <font>
-                               <Font size="14.0" />
-                            </font>
-                         </TextField>
-                         <Button fx:id="btnConfigKey" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="btn-primary" text="⚙️">
-                            <tooltip>
-                               <Tooltip text="Configurar API Key de Gemini" />
-                            </tooltip>
-                         </Button>
+                          <TextField fx:id="txtPrompt" promptText="Escribe tu consulta en lenguaje natural..." HBox.hgrow="ALWAYS">
+                             <font>
+                                <Font size="14.0" />
+                             </font>
+                          </TextField>
+                          <ChoiceBox fx:id="cmbModo" prefWidth="160.0">
+                             <tooltip>
+                                <Tooltip text="Seleccionar motor de IA" />
+                             </tooltip>
+                          </ChoiceBox>
+                          <Button fx:id="btnConfigKey" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="btn-primary" text="⚙️">
+                             <tooltip>
+                                <Tooltip text="Configurar API Key de Gemini" />
+                             </tooltip>
+                          </Button>
                          <Button fx:id="btnEjecutar" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" styleClass="btn-primary" text="Consultar" />
                       </children>
                    </HBox>

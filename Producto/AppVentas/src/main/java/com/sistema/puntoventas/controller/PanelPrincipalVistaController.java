@@ -39,9 +39,6 @@ public class PanelPrincipalVistaController {
 
     @FXML private StackPane contentArea;
 
-    // Variable para no perder el dashboard original al cambiar de pantallas
-    private Node vistaDashboardInicial;
-
     // Cache para almacenar las vistas ya cargadas y preservar su estado (tablas, textos, etc.)
     private final Map<String, Node> vistasCache = new HashMap<>();
 
@@ -163,11 +160,8 @@ public class PanelPrincipalVistaController {
             Node vista;
 
             if (archivoFxml.equals("DashboardVista.fxml")) {
-                if (vistaDashboardInicial == null) {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/sistema/puntoventas/" + archivoFxml));
-                    vistaDashboardInicial = loader.load();
-                }
-                vista = vistaDashboardInicial;
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/sistema/puntoventas/" + archivoFxml));
+                vista = loader.load();
             } else if (archivoFxml.equals("panelVentas.fxml") && vistasCache.containsKey(archivoFxml)) {
                 vista = vistasCache.get(archivoFxml);
             } else {

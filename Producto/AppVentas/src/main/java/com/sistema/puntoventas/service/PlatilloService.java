@@ -40,12 +40,15 @@ public class PlatilloService {
             throw new Exception("El platillo debe tener un precio de venta mayor a cero.");
         }
 
+        if(platillo.getPrecio() < platillo.getCostoProduccion()) {
+            throw new Exception("El precio de venta no puede ser menor al costo de producción.");
+        }
+
         // Validar que el nombre del platillo sea único
         if (platilloRepository.existeNombre(platillo.getNombre().trim(), 0)) {
             throw new Exception("Ya existe un platillo con el nombre '" + platillo.getNombre() + "'.");
         }
 
-        // Aquí podrías agregar lógica adicional para validar los ingredientes, etc.
 
        if(platillo.getTipoProducto() == TipoProducto.PLATILLO) {
            platilloRepository.registrarPlatillo(platillo);

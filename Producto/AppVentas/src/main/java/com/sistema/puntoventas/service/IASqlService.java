@@ -13,6 +13,7 @@ import java.util.List;
 public class IASqlService {
 
     private static final String RUTA_IA_SQL = "src/main/java/com/sistema/puntoventas/util/ia_sql";
+    private static final String MODEL_PATH_DEFAULT = "models/qwen2.5-3b-instruct-q4_k_m.gguf";
 
     private final ILLMRepository llmRepository;
     private final IConsultaSQLRepository consultaRepository;
@@ -28,40 +29,62 @@ public class IASqlService {
     }
 
     public ResultadoConsulta ejecutarConsultaNatural(String consulta) throws Exception {
-        if (consulta == null || consulta.isBlank()) {
-            return new ResultadoConsulta(List.of(), List.of());
-        }
-
-        String apiKey = llmRepository.obtenerApiKey();
-        if (apiKey == null || apiKey.isBlank()) {
-            throw new IllegalStateException("No hay una API Key configurada. Haz clic en ⚙️ para ingresarla.");
-        }
-
-        escribirInputJson(apiKey, consulta);
-
-        String respuestaIA = ejecutarPython();
-
-        String sql = limpiarRespuesta(respuestaIA); 
-
-        if (sql.toUpperCase().startsWith("SELECT")) {
-            ResultadoConsulta resultado = consultaRepository.ejecutarSelect(sql);
-            return new ResultadoConsulta(resultado.getColumnas(), resultado.getFilas(), sql);
-        }
-
-        return new ResultadoConsulta(List.of(), List.of(), respuestaIA);
+        return ejecutarConsultaNatural(consulta, "gemini");
     }
 
-    private void escribirInputJson(String apiKey, String prompt) throws IOException {
+    public ResultadoConsulta ejecutarConsultaNatural(String consulta, String modo) throws Exception {
+        try {
+            if (consulta == null || consulta.isBlank()) {
+                return new ResultadoConsulta(List.of(), List.of());
+            }
+
+            if ("local".equals(modo)) {
+                escribirInputJson(null, consulta, "local", MODEL_PATH_DEFAULT);
+            } else {
+                String apiKey = llmRepository.obtenerApiKey();
+                if (apiKey == null || apiKey.isBlank()) {
+                    throw new IllegalStateException("No hay una API Key configurada. Haz clic en ⚙️ para ingresarla.");
+                }
+                escribirInputJson(apiKey, consulta, "gemini", null);
+            }
+
+            String respuestaIA = ejecutarPython();
+
+            String sql = limpiarRespuesta(respuestaIA); 
+
+            if (sql.toUpperCase().startsWith("SELECT")) {
+                ResultadoConsulta resultado = consultaRepository.ejecutarSelect(sql);
+                return new ResultadoConsulta(resultado.getColumnas(), resultado.getFilas(), sql);
+            }
+
+            return new ResultadoConsulta(List.of(), List.of(), respuestaIA);
+        } catch (Exception e) {
+            System.err.println("Error en IASqlService: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    private void escribirInputJson(String apiKey, String prompt, String modo, String modelPath) throws IOException {
         File dir = new File(RUTA_IA_SQL);
         dir.mkdirs();
 
-        String json = String.format("{\"api_key\": \"%s\", \"prompt\": \"%s\"}",
-                apiKey.replace("\"", "\\\""),
-                prompt.replace("\"", "\\\"").replace("\n", "\\n"));
+        String json;
+        if ("local".equals(modo)) {
+            json = String.format("{\"mode\": \"local\", \"model_path\": \"%s\", \"prompt\": \"%s\"}",
+                    modelPath.replace("\\", "\\\\").replace("\"", "\\\""),
+                    prompt.replace("\"", "\\\"").replace("\n", "\\n"));
+        } else {
+            json = String.format("{\"mode\": \"gemini\", \"api_key\": \"%s\", \"prompt\": \"%s\"}",
+                    apiKey.replace("\"", "\\\""),
+                    prompt.replace("\"", "\\\"").replace("\n", "\\n"));
+        }
 
         try (FileWriter fw = new FileWriter(new File(dir, "input.json"))) {
             fw.write(json);
+            fw.flush(); 
         }
+
+        System.out.println("Input JSON: " + json);
     }
 
     private String obtenerPythonPath() {
@@ -92,9 +115,13 @@ public class IASqlService {
             raw = reader.readLine();
         }
 
+        respuestaFile.delete();
+
         if (raw == null || raw.isBlank()) {
             throw new RuntimeException("Respuesta vacía de la IA.");
         }
+
+        System.out.println("Output JSON (raw): " + raw);
 
         // raw = {"respuesta": "CONTENIDO"}
         // start apunta al 1er char del contenido, saltando la " de apertura del valor

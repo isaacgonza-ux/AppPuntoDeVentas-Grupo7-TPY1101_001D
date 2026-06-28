@@ -85,11 +85,7 @@
                             </graphic>
                         </Button>
 
-                        <Button maxWidth="Infinity" styleClass="menu-button" text="Configuración">
-                            <graphic>
-                                <Label style="-fx-background-color: #B87333;" styleClass="icon-circle" text="C" />
-                            </graphic>
-                        </Button>
+                        
                     </children>
                 </VBox>
             </left>

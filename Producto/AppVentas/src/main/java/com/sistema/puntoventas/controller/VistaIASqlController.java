@@ -28,6 +28,9 @@ public class VistaIASqlController implements Initializable {
     private TextField txtPrompt;
 
     @FXML
+    private ChoiceBox<String> cmbModo;
+
+    @FXML
     private Button btnEjecutar;
 
     @FXML
@@ -52,7 +55,11 @@ public class VistaIASqlController implements Initializable {
         this.consultaRepository = new ConsultaSQLRepositoryImpl();
         this.iaSqlService = new IASqlService(llmRepository, consultaRepository);
 
-        actualizarEstadoApi();
+        cmbModo.getItems().addAll("Gemini", "Local (Qwen2.5-3B)");
+        cmbModo.setValue("Local (Qwen2.5-3B)");
+        cmbModo.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> actualizarEstadoModo());
+
+        actualizarEstadoModo();
         limpiarSqlLabel();
 
         tableResultados.setPlaceholder(new Label("Escribe una consulta y presiona \"Consultar\" para ver los resultados."));
@@ -62,14 +69,21 @@ public class VistaIASqlController implements Initializable {
         btnConfigKey.setOnAction(e -> configurarApiKey());
     }
 
-    private void actualizarEstadoApi() {
-        String key = llmRepository.obtenerApiKey();
-        if (key != null && !key.isBlank()) {
-            lblEstadoApi.setText("API Key configurada");
-            lblEstadoApi.setStyle("-fx-background-color: #d1fae5; -fx-text-fill: #065f46;");
+    private void actualizarEstadoModo() {
+        boolean isGemini = "Gemini".equals(cmbModo.getValue());
+        btnConfigKey.setVisible(isGemini);
+        if (isGemini) {
+            String key = llmRepository.obtenerApiKey();
+            if (key != null && !key.isBlank()) {
+                lblEstadoApi.setText("Gemini - API Key configurada");
+                lblEstadoApi.setStyle("-fx-background-color: #d1fae5; -fx-text-fill: #065f46;");
+            } else {
+                lblEstadoApi.setText("Gemini - API Key no configurada");
+                lblEstadoApi.setStyle("-fx-background-color: #fee2e2; -fx-text-fill: #991b1b;");
+            }
         } else {
-            lblEstadoApi.setText("API Key no configurada — haz clic en ⚙️");
-            lblEstadoApi.setStyle("-fx-background-color: #fee2e2; -fx-text-fill: #991b1b;");
+            lblEstadoApi.setText("Modo Local - Qwen2.5-3B (CPU)");
+            lblEstadoApi.setStyle("-fx-background-color: #dbeafe; -fx-text-fill: #1e40af;");
         }
     }
 
@@ -96,6 +110,13 @@ public class VistaIASqlController implements Initializable {
         ButtonType btnEliminar = new ButtonType("Eliminar");
         dialog.getDialogPane().getButtonTypes().add(btnEliminar);
 
+        dialog.setResultConverter(btn -> {
+            if (btn == btnEliminar) {
+                return "";
+            }
+            return dialog.getEditor().getText();
+        });
+
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
             String valor = result.get().trim();
@@ -104,7 +125,7 @@ public class VistaIASqlController implements Initializable {
             } else {
                 llmRepository.guardarApiKey(valor);
             }
-            actualizarEstadoApi();
+            actualizarEstadoModo();
         }
     }
 
@@ -115,14 +136,18 @@ public class VistaIASqlController implements Initializable {
             return;
         }
 
-        String key = llmRepository.obtenerApiKey();
-        if (key == null || key.isBlank()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("API Key requerida");
-            alert.setHeaderText(null);
-            alert.setContentText("Debes configurar una API Key de Gemini antes de consultar. Haz clic en ⚙️.");
-            alert.showAndWait();
-            return;
+        boolean isGemini = "Gemini".equals(cmbModo.getValue());
+
+        if (isGemini) {
+            String key = llmRepository.obtenerApiKey();
+            if (key == null || key.isBlank()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("API Key requerida");
+                alert.setHeaderText(null);
+                alert.setContentText("Debes configurar una API Key de Gemini antes de consultar. Haz clic en ⚙️.");
+                alert.showAndWait();
+                return;
+            }
         }
 
         Platform.runLater(() -> {
@@ -130,10 +155,12 @@ public class VistaIASqlController implements Initializable {
             btnEjecutar.setText("Consultando...");
         });
 
+        String modo = isGemini ? "gemini" : "local";
+
         javafx.concurrent.Task<ResultadoConsulta> task = new javafx.concurrent.Task<>() {
             @Override
             protected ResultadoConsulta call() throws Exception {
-                return iaSqlService.ejecutarConsultaNatural(consulta);
+                return iaSqlService.ejecutarConsultaNatural(consulta, modo);
             }
         };
 
